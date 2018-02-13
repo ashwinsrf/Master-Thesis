@@ -1,0 +1,87 @@
+\section{Temporary section is just to understand the big picture}
+ \subsection{Structure}
+\begin{itemize}
+    \item Introduction and abstract
+
+    \item Part I: Acoustical model 
+    \begin{itemize}
+        \item Signals and sound fields
+        \item Types of arrays
+        \item Discussion
+    \end{itemize}
+    
+    \item Part II: Environmental sound 
+        \begin{itemize}
+            \item Outdoor sound propagation 
+        \end{itemize}
+
+    \item Part III:Single pair TDOA algorithms
+    \begin{itemize}
+        \item Far field vs near-field
+        \item TDOA and DOA discussion
+        \item Least Square error criterion
+        \item General cross correlation methods (with SCOT/PHAT/ROTH/ML)
+    \end{itemize}
+
+    \item Part IV: n-pairs TDOA algorithms
+    \begin{itemize}
+        \item Time delay estimation  
+        \item Fusion algorithm 
+        \item Multi-Channel Cross Correlation Algorithm (MCCC)
+        \item Beamformers for acoustic localization
+        \item Eigenvalue decomposition methods (MUSIC, ESPIRIT, improvements on them)
+        \item Adaptive multichannel time delay estimation (AED) 
+    \end{itemize}
+    
+    \item Part V: Pre-processing for noise reduction
+    
+    \item Part VI: Post-processing for localization enhancement
+    
+    \item Part VII: Current developments
+    \begin{itemize}
+        \item Minimum Entropy method of time delay estimation
+        \item Independent component analysis (ICA) for broadband localization
+        \item ...
+    \end{itemize}
+    
+    \item Part VIII: Thesis scope
+    \begin{itemize}
+        \item Abstract
+        \item Summary
+    \end{itemize}
+    
+    \item Part XI: Simulations
+    
+    \item Part X: Measurements
+    
+    \item Part XI: Analysis, results, conclusion ...
+    
+\end{itemize}
+
+
+
+\subsection{substructure 2}
+
+Another way to organize: 
+\begin{itemize}
+    \item Pre-processing
+    \item Localization
+        \begin{itemize}
+            \item Direct: Steps:
+            \begin{itemize}
+                \item search the space by creating a spatial analysis map
+                \item estimate a function at each point in the search space and find the peak 
+                \item the most popular direct approach is SRP-PHAT
+            \end{itemize}
+            \item Indirect: Steps:
+            \begin{itemize}
+                \item Solve intersection of hyperboloids equations
+                \item Minimize errors for possible microphone pairs through closed-form estimators and iterative maximum likelihood functions
+            \end{itemize}
+             
+        \end{itemize}
+    \item Post-processing
+    
+\end{itemize}
+
+

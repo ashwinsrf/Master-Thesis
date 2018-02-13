@@ -1,0 +1,43 @@
+\section{Acoustic Models}
+\subsection{Introduction}
+Various methods have been used \cite{benesty2008microphone} to solve the estimation problem discussed in the previous section. The estimation problem would be trivial if the source signals received at each of the different microphones were simply delayed and scaled versions of each other. However, the source signal at each microphone is generally intermixed with surrounding noise. On top of that it contains attenuated and distorted copies of itself due to boundary reflections (if the measurement is not being made in free field or its approximation like an anechoic chamber). Add to this the fact that the source itself might be moving leading to a changing TDOA to the different microphones. All these factors quickly convert TDOA estimation to a non-trivial problem. \\
+Based on these factors, the problem can be solved for assuming a variety of acoustical models. Beginning for a single source in a free-field (non-reverberant), to a single-source in a reverberant environment, to multiple-sources in a free-field or reverberant environments, and lastly, multiple-moving-sources. The following section will formulate each of these models.
+
+\subsection{Formulation of possible acoustic models}
+Suppose our sources are in a sound field with an array of N microphones. Then the different possible acoustic models for TDOA analysis can be formulated as below.
+
+\subsubsection{Single-source in free-field}
+Let the acoustic signal from the single-source be \textit{s(k)} at time k. Then the signal received by the $n^{th}$ microphone at time k can be given be divided into the signal $x_n(k)$ and noise $\eta_n(k)$
+\begin{equation}
+    \begin{split}
+    y_n(k) &= x_n(k) + \eta_n(k),\hspace{10pt} n = 1,2,....,N\\ 
+           &=\alpha_n s(k-t-\tau_{n1}) + \eta_n(k),
+    \end{split}
+\end{equation}
+where $\alpha_n$ is the gain/ attenuation of the signal at microphone n, t is the delay to the first microphone that receives the signal and $\tau_{n1}$ is the relative time delay of receiving signal between the first and the $n^{th}$ microphone, $\eta_n(k)$ being the noise at the $n^{th}$ microphone at time k. $\tau_{n1}$ can be defined as, $\tau_{n1}=\zeta(\tau)$, where, $\tau$ is the time delay between a pre-determined pair of microphones (say, microphone 1 and 2). Given $\tau$ and knowing the array geometry, it is possible to determine possible solutions for the rest of the delays between microphone pairs. Of course, there might not be a unique solution given a single value of $\tau$. $\zeta(\tau)$ can then be defined as a function of $\tau$ which can linear or a higher order polynomial depending on the array geometry. The estimation problem is then that of determining the estimate $\hat{\tau}$ of the true time delay $\tau$, given a finite number of observations.
+
+\subsubsection{Multiple-sources in free-field}
+
+For multiple sources (m = 1,2,....M), the signal received at $n^{th}$ microphone can be defined as : 
+\begin{equation}
+    \begin{split}
+         y_n(k) &= x_n(k) + \eta_n(k),\hspace{10pt} n = 1,2,....,N \\
+                &= \sum\limits_{m=1}^M \alpha_{nm}s_m[k - t_m - \zeta({\tau_m})] + \eta_n(k),
+    \end{split}
+\end{equation}
+which is similar to the equation for the single-source, except the gain factor and the signal now depend on the $m^{th}$ source, so the total signal received at $n^{th}$ microphone is the sum of the signals from all M sources. The estimation problem is then that of determining all the estimates $\hat{\tau}_m$ of the true time delays $\tau_m$, given a finite number of observations.
+
+\subsubsection{Single-source in reverberant-field}
+
+For a single source in a reverberant field, finding the delay is not a simple problem. A reverberant field can be represented by a sufficiently long FIR filter, which adds multiple delayed and attenuated version of the source signal to the received signal, the number depending on the number of taps on that filter. The signal received at the $n^{th}$ microphone can be given by
+\begin{equation}
+    \begin{split}
+         y_n(k) &= x_n(k) + \eta_n(k),\hspace{10pt} n = 1,2,....,N \\
+                &= g_n*s(k) + \eta_n(k),
+    \end{split}
+\end{equation}
+where $g_n$ is the impulse response from the source to the $n^{th}$ microphone. 
+The $g_n$ then signifies a filter which adds multiple attenuated copies of the source signal at the receiver due to reverberation and also the actual source signal delay. So, the true delay for the same source signal on different microphone is hidden in this filter. It can be thought of as a multiple source problem, but all the sources are playing the same signal. The problem then is of separating these multiple sources with the knowledge of the reverberant field. If the goal is room auralization then the reverberation needs to be captured as image sources, however if the goal is source localization, then a technique needs to be devised so that the reverberation effect is filtered converting the problem to an approximation of the single-source in a free field model. 
+
+\subsubsection{Multiple-sources in reverberant-field}
+More on this soon!!

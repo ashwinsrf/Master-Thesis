@@ -1,0 +1,366 @@
+\documentclass[a4paper, 12pt]{report}
+%  A simple AAU report template.
+%  2015-05-08 v. 1.2.0
+%  Copyright 2010-2015 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Language, Encoding and Fonts
+% http://en.wikibooks.org/wiki/LaTeX/Internationalization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Select encoding of your inputs. Depends on
+% your operating system and its default input
+% encoding. Typically, you should use
+%   Linux  : utf8 (most modern Linux distributions)
+%            latin1 
+%   Windows: ansinew
+%            latin1 (works in most cases)
+%   Mac    : applemac
+% Notice that you can manually change the input
+% encoding of your files by selecting "save as"
+% an select the desired input encoding. 
+\usepackage[utf8]{inputenc}
+% Make latex understand and use the typographic
+% rules of the language used in the document.
+\usepackage[english]{babel}
+% Use the palatino font
+\usepackage[sc]{mathpazo}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+% Choose the font encoding
+\usepackage[T1]{fontenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Graphics and Tables
+% http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics
+% http://en.wikibooks.org/wiki/LaTeX/Tables
+% http://en.wikibooks.org/wiki/LaTeX/Colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% load a colour package
+\usepackage{xcolor}
+\definecolor{aaublue}{RGB}{33,26,82}% dark blue
+% The standard graphics inclusion package
+\usepackage{graphicx}
+% Set up how figure and table captions are displayed
+\usepackage{caption}
+\captionsetup{%
+  font=footnotesize,% set font size to footnotesize
+  labelfont=bf % bold label (e.g., Figure 3.2) font
+}
+% Make the standard latex tables look so much better
+\usepackage{array,booktabs}
+% Enable the use of frames around, e.g., theorems
+% The framed package is used in the example environment
+\usepackage{framed}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mathematics
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Defines new environments such as equation,
+% align and split 
+\usepackage{amsmath}
+% Adds new math symbols
+\usepackage{amssymb}
+% Use theorems in your document
+% The ntheorem package is also used for the example environment
+% When using thmmarks, amsmath must be an option as well. Otherwise \eqref doesn't work anymore.
+\usepackage[framed,amsmath,thmmarks]{ntheorem}
+\usepackage{pdfpages}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page Layout
+% http://en.wikibooks.org/wiki/LaTeX/Page_Layout
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Change margins, papersize, etc of the document
+\usepackage[
+  a4paper,
+  total={170mm,250mm},
+  top=28mm,
+  inner=28mm,% left margin on an odd page
+  outer=28mm,% right margin on an odd page
+  ]{geometry}
+% Modify how \chapter, \section, etc. look
+% The titlesec package is very configureable
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat*{\section}{\normalfont\Large\bfseries}
+\titleformat*{\subsection}{\normalfont\large\bfseries}
+\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
+%\titleformat*{\paragraph}{\normalfont\normalsize\bfseries}
+%\titleformat*{\subparagraph}{\normalfont\normalsize\bfseries}
+
+% Clear empty pages between chapters
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\pagestyle{empty}\origdoublepage}%
+}
+\let\cleardoublepage\clearemptydoublepage
+
+% Change the headers and footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} %delete everything
+\renewcommand{\headrulewidth}{0pt} %remove the horizontal line in the header
+\fancyhead[RE]{\small\nouppercase\leftmark} %even page - chapter title
+\fancyhead[LO]{\small\nouppercase\rightmark} %uneven page - section title
+\fancyhead[LE,RO]{\thepage} %page number on all pages
+% Do not stretch the content of a page. Instead,
+% insert white space at the bottom of the page
+\raggedbottom
+% Enable arithmetics with length. Useful when
+% typesetting the layout.
+\usepackage{calc}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add bibliography and index to the table of
+% contents
+\usepackage[nottoc]{tocbibind}
+% Add the command \pageref{LastPage} which refers to the
+% page number of the last page
+\usepackage{lastpage}
+% Add todo notes in the margin of the document
+\usepackage[
+%  disable, %turn off todonotes
+  colorinlistoftodos, %enable a coloured square in the list of todos
+  textwidth=\marginparwidth, %set the width of the todonotes
+  textsize=scriptsize, %size of the text in the todonotes
+  ]{todonotes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperlinks
+% http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Enable hyperlinks and insert info into the pdf
+% file. Hypperref should be loaded as one of the 
+% last packages
+\usepackage{hyperref}
+\hypersetup{%
+	pdfpagelabels=true,%
+	plainpages=false,%
+	pdfauthor={Author(s)},%
+	pdftitle={Title},%
+	pdfsubject={Subject},%
+	bookmarksnumbered=true,%
+	colorlinks=false,%
+	citecolor=black,%
+	filecolor=black,%
+	linkcolor=black,% you should probably change this to black before printing
+	urlcolor=black,%
+	pdfstartview=FitH%
+}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%  A simple AAU report template.
+%  2015-05-08 v. 1.2.0
+%  Copyright 2010-2015 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
+%
+%
+%
+% see, e.g., http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#New_commands
+% for more information on how to create macros
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros for the titlepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Creates the aau titlepage
+\newcommand{\aautitlepage}[3]{%
+  {
+    %set up various length
+    \ifx\titlepageleftcolumnwidth\undefined
+      \newlength{\titlepageleftcolumnwidth}
+      \newlength{\titlepagerightcolumnwidth}
+    \fi
+    \setlength{\titlepageleftcolumnwidth}{0.5\textwidth-\tabcolsep}
+    \setlength{\titlepagerightcolumnwidth}{\textwidth-2\tabcolsep-\titlepageleftcolumnwidth}
+    %create title page
+    \thispagestyle{empty}
+    \noindent%
+    \begin{tabular}{@{}ll@{}}
+      \parbox{\titlepageleftcolumnwidth}{
+        \iflanguage{danish}{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{figures/aau_logo_da}
+        }{%
+          \includegraphics[width=\titlepageleftcolumnwidth]{aau_logo_en}
+        }
+      } &
+      \parbox{\titlepagerightcolumnwidth}{\raggedleft\sf\small
+        #2
+      }\bigskip\\
+       #1 &
+      \parbox[t]{\titlepagerightcolumnwidth}{%
+      \textbf{Abstract:}\bigskip\par
+        \fbox{\parbox{\titlepagerightcolumnwidth-2\fboxsep-2\fboxrule}{%
+          #3
+        }}
+      }\\
+    \end{tabular}
+    \vfill
+    \iflanguage{danish}{%
+      \noindent{\footnotesize\emph{Rapportens indhold er frit tilgængeligt, men offentliggørelse (med kildeangivelse) må kun ske efter aftale med forfatterne.}}
+    }{%
+      \noindent{\footnotesize\emph{The content of this report is freely available, but publication (with reference) may only be pursued due to agreement with the author.}}
+    }
+    \clearpage
+  }
+}
+
+%Create english project info
+\newcommand{\englishprojectinfo}[8]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Title:}\\ #1\bigskip\par
+    \textbf{Theme:}\\ #2\bigskip\par
+    \textbf{Project Period:}\\ #3\bigskip\par
+    \textbf{Project Group:}\\ #4\bigskip\par
+    \textbf{Participant(s):}\\ #5\bigskip\par
+    \textbf{Supervisor(s):}\\ #6\bigskip\par
+    \textbf{Copies:} #7\bigskip\par
+    \textbf{Page Numbers:} \pageref{LastPage}\bigskip\par
+    \textbf{Date of Completion:}\\ #8
+  }
+}
+
+%Create danish project info
+\newcommand{\danishprojectinfo}[8]{%
+  \parbox[t]{\titlepageleftcolumnwidth}{
+    \textbf{Titel:}\\ #1\bigskip\par
+    \textbf{Tema:}\\ #2\bigskip\par
+    \textbf{Projektperiode:}\\ #3\bigskip\par
+    \textbf{Projektgruppe:}\\ #4\bigskip\par
+    \textbf{Deltager(e):}\\ #5\bigskip\par
+    \textbf{Vejleder(e):}\\ #6\bigskip\par
+    \textbf{Oplagstal:} #7\bigskip\par
+    \textbf{Sidetal:} \pageref{LastPage}\bigskip\par
+    \textbf{Afleveringsdato:}\\ #8
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% An example environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\normalfont}
+\theoremstyle{break}
+\def\theoremframecommand{{\color{gray!50}\vrule width 5pt \hspace{5pt}}}
+\newshadedtheorem{exa}{Example}[chapter]
+\newenvironment{example}[1]{%
+		\begin{exa}[#1]
+}{%
+		\end{exa}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{siunitx} % adds SI units
+\usepackage{placeins} % includes FloatBarrier
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{gensymb}
+\usepackage{csvsimple}
+\usepackage{hhline}
+\usepackage{pdfpages}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage{stix} 
+\usepackage{gensymb}
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\usepackage[backend=biber]{biblatex}
+\usepackage{booktabs}
+\addbibresource{articles.bib}
+\renewcommand{\thesection}{\hspace*{-1.0em}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\argmax}{\operatornamewithlimits{argmax}}
+
+\lstset{language=Matlab,%
+    %basicstyle=\color{red},
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\usepackage{etoolbox}
+\usepackage{tocloft}
+
+
+%\begin{titlepage}
+%	\rule{1pt}{1.1\textheight} % Vertical line
+%	\hspace{0.02\textwidth} 
+%	\parbox[b]{0.95\textwidth}{ \\
+%		
+%		{\huge \bfseries Report\\[\baselineskip]}
+%		{\large SDM vs Binaural:\\ A comparison of different room auralization techniques}\\[2\baselineskip]
+%		{\large\textit{Acoustics and Audio Technology }\\{9th semester project}}\\
+%		{\large Aalborg University\\[4\baselineskip]}
+%		
+%		\vspace{0.6\textheight}
+%		{\noindent Ashwin~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Maxime}\\[0\baselineskip]
+%		{\noindent Saraf~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Démurger}}
+%
+%\end{titlepage} 
+
+
+
+
+
+
+
+\begin{document}
+\tableofcontents
+\include{01_Introduction}
+\include{1_TDOA_Basics}
+\include{2_Models}
+\include{2x1_Environmental_Sound_Propagation}
+\include{3x1_GCC}
+\include{3x2_SRP}
+\include{90_Appendix}
+
+\printbibliography
+\end{document}
