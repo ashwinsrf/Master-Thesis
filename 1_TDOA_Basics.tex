@@ -68,7 +68,7 @@ Let's define a Least Square (LS) problem which solves the localization of the so
 
 Traditionally, the literature define 3 errors criterion for solving the source location LS problem:  $J_{TDOA}(s)$, $J_{DOA}(s)$, $J_{D}(s)$. Those criterion are explains in the following sections.
 
-\subsection{$J_{TDOA}(s)$ Error Criterion}
+\subsubsection{$J_{TDOA}(s)$ Error Criterion}
 
 $J_{TDOA}(s)$ is the squared error difference between the time delay estimate $\tau$ and the time delay measured between the microphone pairs. The criterion and the optimization problem is given in the following.
 
@@ -89,7 +89,7 @@ Note that the error criterion is scaled by a factor $\epsilon_{itdoa}$ which is 
 \label{eq:epsilonjtdoa}
 \end{equation}
 
-\subsection{$J_{DOA}(s)$ Error Criterion}
+\subsubsection{$J_{DOA}(s)$ Error Criterion}
 
 This is a classical formulation of the problem, which follows the same idea as the TDOA error criterion but this time the $J_{DOA}(s)$ is the squared error difference between the DOA estimate $\theta$ and the DOA measured between the microphone pairs. 
 
@@ -109,7 +109,7 @@ Assuming that the DOA estimates $\theta_{i}$ are independently corrupted by zero
 \label{eq:epsilonjtdoa}
 \end{equation}
 
-\subsection{$J_{D}(s)$ Error Criterion}
+\subsubsection{$J_{D}(s)$ Error Criterion}
 
 finally, $J_{D}(s)$ is the squared error difference between the orthogonal distance from s to the appropriate cone approximation 
 
@@ -130,7 +130,7 @@ D(\chi_{i},s)=R_{i}.\sin{[\theta_{i}-\Theta(m_{i1},m_{i2},s)}]
  \epsilon_{id}=\frac{1}{\mathrm{Var}{\Theta_{i}}}    
 \end{equation}
 
-\subsection{Estimator performance}
+\subsubsection{Estimator performance}
 
 The estimators described above vary in term of performance under certain conditions. For a bi-linear array, Brandstein has shown that $J_{TDOA}(s)$ and $J_{DOA}(s)$ are more robust to great angle of incidence than $J_{D}(s)$. At low noise level, $J_{TDOA}(s)$ is proven to be slightly better than $J_{DOA}(s)$ but $J_{DOA}(s)$ perform better overall especially for long range source location. $J_{TDOA}(s)$ is better for broadside sources and low noise level but $J_{DOA}(s)$ is more robust for less favorable noise conditions
 
