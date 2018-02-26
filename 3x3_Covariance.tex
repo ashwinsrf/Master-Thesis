@@ -1,6 +1,82 @@
-\subsection{Deconvolution methods and covariance matrix fitting}
+\subsection{Deconvolution methods}
 
-Very useful for coherent sources mapping (ground effect), it also solve the SPL. It is a good method designed for a moving microphone array. Drawback are that the bigger area to investigate, the bigger the aperture of the array must be (For one position). If there is several positions used to measure then it's ok.  More on that soon
+Beamforming techniques for sound localization have been study intensively over the last decades and is considered among the state of the art methods. The main drawback of the conventional beamforming is the side lobe of the beamform itself which sometimes lead to smearing of the sound source location. While this problem has motivated the creation of new beamformers, the problem still lie in the method and the beaming itself. Therefore a new class of algorithms has been developped to deconvolve the noise signals from the desired steered signal such as CLEAN \cite{sijtsma2007clean}. Even if CLEAN was applied successfully, it is in 2006 that the deconvolution approach for the mapping of acoustic sources (DAMAS) was proposed \cite{brooks2006deconvolution} and was acknowledged a major breakthrough in array processing. At first research was mainly focused on aeroacoustic for the development of near-field sound localization system but it seams that a new enthusiasm has taken over scientists trying to solve other sound localization problems. While the DAMAS method is mainly designed for near field measurements in the range of the array aperture; a new method was proposed in \cite{zhao2015large} and \cite{zhao2017large} where a small aperture array was used to measure source signal in the far field. A review of the underlying principes of the main deconvolution algorithms is first given in the following, and finally specific method for coherent and incoherent sources localization is discussed.
 
-\subsubsection{Deconvolution approach for the mapping of acoustic sources (DAMAS)}
+\subsubsection{CLEAN}
 
+CLEAN is an algorithm used to remove the influence of the point spread function(PSF) on the beamformed result. It is possible to remove the side lobes of the beamformer and get a more accurate localization, apparently it requires many microphones. ClEAN-SC is an extension of the algorithm for the case of coherent sources, it performs the deconvolution in the frequency domain which usually assumes a shift-invariant PSF, a deconvolution techniques in the time domain was developped and is names TIDY.
+
+\subsubsection{DAMAS}
+
+Conventional beamforming produces an output that is dependent on array geometry, size, source distance, and frequency. DAMAS removes those array-dependent beamforming characteristics from the output to give an explicit and non ambiguous source localization and level. The DAMAS use the steering vector $\hat{e}$ of the array defined in section.. and formulates that the output of a standard beamformer with $m_{0}$ microphones can be written as:
+
+\begin{equation}
+    Y=\frac{\hat{e}^{T}\hat{G}\hat{e}}{m_0^2}
+    \label{eq:DAMASoutputbeamformer}
+\end{equation}
+where $\hat{G}$ is the Cross Spectral Matrix (CSM) given by
+\begin{equation}
+\hat{G}=
+    \begin{bmatrix} 
+      G_{11} & G_{12} & \cdots & G_{1m_{0}}\\
+      \vdots &  G_{22} &       &  \vdots\\
+      \vdots &         & \ddots &  \vdots\\
+      G_{m_{0}1} &     &       &  G_{m_{0}m_{0}}\\
+    \end{bmatrix}  
+\end{equation}
+$G_{mm'}$ is the cross spectrum between microphone m  and m'. It is computed by taking the FFT of the pressure recording $p^{*}_{mk}(t)$ and $p_{m'k}(t)$ averaged over K data blocks. $w_{s}$ is a weight filter like Hamming window.
+\begin{equation}
+    G_{mm'}=\frac{2}{Kw_{s}T}\sum\limits_{k=0}^{K}[P^{*}_{mk}(f,T)P_{m'k}(f,T)]
+\end{equation}
+
+Pressure at the two microphones $p^{*}_{mk}(t)$ and $p_{m'k}(t)$ can be split to form two terms accounting for the amplitude of the signal and the steering vector, such that the cross spectrum for a single source can be written as the product of the squared pressure with the cross spectrum of the steering vectors K:
+
+\begin{equation}
+\hat{G}_{n}= X_{n} 
+\begin{bmatrix} 
+      e_{1}^{-1}^{*}e_{1}^{-1} & e_{1}^{-1}^{*}e_{2}^{-1} & \cdots &   e_{1}^{-1}^{*}e_{m_{0}}^{-1}\\
+      e_{2}^{-1}^{*}e_{1}^{-1} & e_{2}^{-1}^{*}e_{2}^{-1} &       &  \vdots\\
+         &     & \ddots &   \vdots\\
+       &     &   &   e_{m_{0}}^{-1}^{*}e_{m_{0}}^{-1}\\
+    \end{bmatrix}_{ n}= X_{n}.K 
+\end{equation}   
+
+DAMAS assumes that the total CSM is the sum of all of N sources CSM
+\begin{equation}
+    \hat{G}=\sum_{n}\hat{G}_{n}
+\end{equation}  
+
+Therefore, the output of the output of the beamformer in equation \ref{eq:DAMASoutputbeamformer} can be rewritten as
+
+\begin{equation}
+    Y(\hat{e})=\frac{\hat{e}^{T}\sum_{n}\hat{G}_{n}\hat{e}}{m_0^2}=\frac{\hat{e}^{T}\sum_{n}X_{n}K\hat{e}}{m_0^2}=\sum_{n}\frac{\hat{e}^{T}K\hat{e}}{m_0^2} X_{n}
+\end{equation}
+
+The left term of the product being rewrote as the product of the propagation matrix A with $X_{n}$.
+\begin{equation}
+    A=\sum_{n}\frac{\hat{e}^{T}K\hat{e}}{m_0^2}
+\end{equation}
+Giving the following linear equation
+\begin{equation}
+    Y = A X_{n}
+\end{equation}
+
+
+\subsubsection{DAMAS-C}
+
+As the classical array beamforming, it relies on the following assumption: noise regions under study are distributions of statistically independent sources. Therefore if coherent sources a present it can produce a distorted output. Therefore an extention to DAMAS has been developped to deal with the coherent sources case.
+
+
+\subsubsection{Multiposition-DAMAS}
+
+A method has been used to scan a large 2D plane using a small aperture array at several position. It is based on DAMAS and gave good resolution once again there is a lot of microphone on the array. The article proposes to solve the DAMAS problem using Covariance Matrix Fitting.
+
+
+
+
+
+
+\subsubsection{Discussion}
+
+Deconvolution methods are of great interest as they recover the source level and position at once. It is computationally heavy but it gives improves results over the classial beamforming method. The research current focus is on planar microphone array and nobody has applied deconvolution to tetrehedral arrays also the drawback of such as system is that they seem to relie on a high number of microphones, the low number of microphones case has not been investigated in term of robustness and multi sources.
+Might be useful for coherent sources mapping (ground effect), it also solve the SPL. It is a good method designed for a moving microphone array. Drawback are that the bigger area to investigate, the bigger the aperture of the array must be (For one position). If there is several positions used to measure then it's ok.  More on that soon

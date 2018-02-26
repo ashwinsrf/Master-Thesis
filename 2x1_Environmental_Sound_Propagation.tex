@@ -1,7 +1,7 @@
 \subsection{Outdoor sound field modelling}
 Various different models have been designed for outdoor sound field received at a receiver. The ISO 9613-2 \cite{ISO9613} is an international standard model for attenuation of sound when propagating outdoors. The standard uses an empirical method to quantify attenuation in different circumstances. This is a disadvantage as the model might not fit particular real world scenarios and user discretion is needed when using the model. NMPB-2008 \cite{dutilleux2010nmpb} is a French standard model which uses simple engineering methods to model road traffic noise. Over time it has been extended to include other sound sources. Nord2000 \cite{plovsing2000nord2000} and Harmonoise \cite{defrance2007outdoor} are more advanced engineering models for outdoor sound propagation. Nord2000 was developed in the period 1996-2001 by DELTA (Denmark, project manager, SINTEF (Norway), and SP (Sweden). Harmonoise is a more recent method and is made with a collaboration of various European countries. Nord2000 and Harmonoise are based on a similar approach and often produce quite similar models. Various inconclusive studies have been conducted comparing the two \cite{garg2014critical},\cite{jonsson2008comparison}. Eventually, to have a harmonized and coherent approach, a common framework for noise assessment (CNOSSOS-EU) was developed by the European Commission \cite{kephalopoulos2012common} in co-operation with the EU Member States to be applied for strategic noise mapping as required by the Environment Noise Directive (2002/49/EC). CNOSSUS-EU investigates the various existing methods and their advantages and disadvantages. It takes into consideration the accuracy as well as the computational complexities of the various methods. In general, the effect of different factors on outdoor sound propagation are described below.
 \subsubsection{Spreading loss} 
-The sound intensity from an omni-directional sound source drops as a function of distance due to wavefront spreading. The intensity I at distance r of a source with power P, is given by
+The sound intensity from an omni-directional sound source drops as a function of distance due to wavefront spreading. The intensity I received at distance r from a source with power P, is given by
 \begin{equation}
     I = \frac{P}{4\pi r^2}.
 \end{equation}
@@ -47,12 +47,66 @@ where $\lambda=wavelength$. The value of $C_2$ determines if ground reflections 
 \end{equation}
 Over large distances even buildings act like barriers, with the rooftop causing double diffraction. ISO 9613-2 \cite{ISO9613} provides a simple empirical method to calculate attenuation due to buildings.
 \subsubsection{Ground effects}
-When both source and receiver are close to the ground, interference of sound travelling directly from  source-to-receiver and sound reflected from the ground causes various ground effects. This interference can of course be both constructive or destructive. On acoustically hard surfaces such as non-porous asphalt or concrete, ground effects cause sound pressure to approximately double across a wide range of frequency. For porous surfaces, lower frequencies are enhanced while the higher frequencies get absorbed by the ground. For plane waves, the reflection coefficient of sound waves reflecting from the ground at angle $\phi$ is given by
+On acoustically hard surfaces such as non-porous asphalt or concrete, ground effects cause sound pressure to approximately double across a wide range of frequency. For porous surfaces, lower frequencies are enhanced while the higher frequencies get absorbed by the ground. When both source and receiver are close to the ground, interference of sound travelling directly from  source-to-receiver and sound reflected from the ground causes various ground effects. This interference can be both constructive or destructive. The pressure at a location $(x,y,z)$ due to a sound source can be given as a sum of the direct wave component, $P_{dir}$ and the reflected wave component $P_{ref}$ multiplied with the reflection coefficient R,
 \begin{equation}
-R = \frac{sin (\phi) - Z_1/Z_2}{sin (\phi) + Z_1/Z_2},
+    P(x,y,z)=P_{dir}(x,y,z)+R.P_{ref}(x,y,z),    
 \end{equation}
-the $\phi \approx 0$. $Z_1$ and $Z_2$ are acoustical impedance of air and ground respectively. For infinitely hard surfaces $Z_1/Z_2 = 0$ and $R \to 1$. For infinitely soft surfaces  $Z_1/Z_2 = \infty$ and $R \to -1$. This means that there is a phase change upon reflection on acoustically soft surfaces, which causes destructive interference and can be seen as ground absorption. Of course the impedance itself is a function of frequency, so what acts as a relatively hard surface for low frequencies can act as a relatively soft surface for higher frequencies. 
+Here, $P_{dir} \neq P_{ref}$ as the two might have different propagation path lengths $r_ {dir}$ and $r_{ref}$. We have,
+\begin{equation}
+    P(x,y,z)=\frac{e^{-ikr_{dir}}}{4\pi r_{dir}} + R.\frac{e^{-ikr_{ref}}}{4\pi r_{ref}},
+\end{equation}
+For plane waves, the reflection coefficient of sound waves reflecting from the ground at angle $\phi$ is given by
+\begin{equation}
+    R = \frac{cos (\phi) - \beta}{cos (\phi) + \beta},
+\end{equation}
+here $\beta$ is specific normalized admittance of ground with respect to air. For infinitely hard surfaces $\beta \to 0$ and $R \to 1$. For infinitely soft surfaces  $\beta \to \infty$ and $R \to -1$. This can be interpreted as a phase change upon reflection from acoustically soft surfaces, which causes destructive interference and can also be seen as ground absorption. Note that for large distances, $\phi \to 90\degree$ (grazing incidence),  $r_2 \to r_1$ which makes $P_{ref} \to P_{dir}$ causing
+\begin{equation}
+\begin{split}
+    P_{plane}(x,y,z)&=P_{dir}(x,y,z)+ \frac{0-\beta}{0+\beta}.P_{dir}(x,y,z)\\
+            &=0.
+\end{split}
+\end{equation}
+This predicts a net zero field over large distances irrespective of the value of $\beta$. The plane wavefront assumption is the cause of this error. Taking spherical waves, the equation for pressure becomes (Chap. 2 \cite{attenborough2006predicting})
+\begin{equation}
+    P(x,y,z)=\frac{e^{-ikr_{dir}}}{4\pi r_{dir}} + [R + (1-R)F(\omega)]\frac{e^{-ikr_{ref}}}{4\pi r_{ref}}
+    \label{Eq:SphPressure}
+\end{equation}
+The $F(\omega)$, known as the boundary loss factor, is given by
+\begin{equation}
+    F(\omega)=1-i\sqrt{\pi}\omega e^{-\omega^2}\text{erfc}(i\omega).
+\end{equation}
+The $\omega$, often called the numerical distance, given by
+\begin{equation}
+    \omega \approx \frac{1}{2}(1+i)\sqrt{kr_{ref}}(cos(\phi)+\beta)
+\end{equation}
+and finally the erfc(i$\omega$) is known as the complementary error function given by 
+\begin{equation}
+    \text{erfc}(i\omega) = 1-\text{erf}(i\omega)
+\end{equation}
+where
+\begin{equation}
+    \text{erf}(i\omega)=\frac{1}{\sqrt\pi}\int_{-i\omega}^{i\omega}e^{-t^2}dt,
+\end{equation}
+which is a sigmoid shaped error function. Now by setting
+\begin{equation}
+    P_{plane}(x,y,z)=\frac{e^{-ikr_{dir}}}{4\pi r_{dir}} + R.\frac{e^{-ikr_{ref}}}{4\pi r_{ref}},
+\end{equation}
+and 
+\begin{equation}
+    P_{sph}(x,y,z)=(1-R)F(\omega).\frac{e^{-ikr_{ref}}}{4\pi r_{ref}},
+\end{equation}
+Eq. \ref{Eq:SphPressure} becomes
+\begin{equation}
+    P(x,y,z)=P_{plane}(x,y,z) + P_{sph}(x,y,z),
+\end{equation}
+here the $P_{sph}(x,y,z)$ contribution is known as the ground wave component. It corresponds to the contribution from the vicinity of the image source in the ground plane. It includes a component known as the surface wave, which propagates close and parallel to a porous ground surface and decays with inverse square root of range.
+The ground itself impedes sound propagation by a variety of factors. More details can be found in \cite{attenborough2011outdoor} where the author provides a 4-parameter model that requires porosity, flow resistivity, tortuosity and pore shape factor for modelling ground impedance on outdoor sound propagation. 
 
-Note that for large distances, $\phi \to 0$ (grazing incidence) and thus $R \to -1$, which predicts a net zero field over large distances irrespective of the values of $Z_1$ and $Z_2$. The plane wavefront assumption is the cause of this obvious error. Assuming spherical waves and grazing incidence, the equation for pressure at a distance r becomes
+\subsection{Meteorological effects}
+Wind and temperature have different effects on sound propagation. They directly change the speed of sound
+\begin{equation}
+    c_z = c_0\sqrt\frac{T+273.15}{273.15} + u_z,
+\end{equation}
+where $c_z$ is the speed of sound for temperature T above 0\degree C, $c_0$ is the speed of sound for no wind and 0\degree C, and $u_z$ is the wind velocity in the direction of propagation of sound. 
 
-MORE ON THIS SOON!!!
+They also cause acoustic gradients (varying refractive index) to occur in the atmosphere. Usually, with increasing height, the temperature decreases. This causes sound to travel slower with height. In the absence of wind this causes the sound to refract upwards leading to less sound received at the receiver. Wind speed can increase or decrease the sound speed. Generally, speed of wind increases with height, which causes the sound travelling along the wind to refract downwards. Conversely, if the sound is travelling against the wind, this would cause the sound to refract upwards.
