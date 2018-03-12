@@ -38,11 +38,16 @@ Of course as the source location gets closer to being orthogonal to the midpoint
 \end{equation}
 where $D_{error}$ is the actual source distance error (the gap between the cone and the hyperboloid) \cite{Brandstein:1995:FSS:922154}.
 
-Microphones in microphone arrays are usually closely spaced with respect to the actual source distance, so the cone approximation works well. In most scenarios errors due to noise from other system parameters are greater than the errors associated with this approximation. Thus, given the time delay information between a microphone pair, the source can be located at a particular direction $\theta$, associated with the cone for that time delay. 
+Microphones in microphone arrays are usually closely spaced with respect to the actual source distance, so the cone approximation works well. In most scenarios errors due to noise from other system parameters are greater than the errors associated with this approximation. Thus, given the time delay information between a microphone pair, the source can be located at a particular direction $\theta$, associated with the cone for that time delay, \textit{d}. 
 
-It can be shown that the cone approximation is the same as a far-field assumption for the sound source. The far-field assumption leads to a planar wave-front for a uniform linear microphone array. Thus, for the far-field, the DOA estimation problem is essentially the same as the TDOA estimation problem.
+It can be shown that the cone approximation is the same as a far-field assumption for the sound source. The far-field assumption leads to a planar wave-front for a uniform linear microphone array. Thus, for the far-field, the DOA estimation problem is essentially the same as the TDOA estimation problem as there is a one-to-one relation between $\theta$ and \textit{d}.
 
-[FIG FOR FAR FIELD HERE !!!]
+\begin{figure}
+    \centering
+    \includegraphics{Figures/Far-field.png}
+    \caption{With far-field approximation it can be assumed that the sound waves incident on the pair of microphones }
+    \label{fig:my_label}
+\end{figure}
 
 Now, given the TDOA between multiple microphone pairs, the source localization problem can be solved by triangulation. This triangulation problem can be solved for different variables ($\theta$, Source Distance or the Time Delay itself). The next section will detail the basics of solving such a problem. 
 
@@ -67,7 +72,7 @@ Let's define a Least Square (LS) problem which solves the localization of the so
 \hat{s}= \argmin_{s} J(s) 
 \end{equation}
 
-Traditionally, the literature define 3 errors criterion for solving the source location LS problem:  $J_{TDOA}(s)$, $J_{DOA}(s)$, $J_{D}(s)$. Those criterion are explains in the following sections.
+3 error criteria can be selected for solving the source location LS problem:  $J_{TDOA}(s)$, $J_{DOA}(s)$, $J_{D}(s)$. Those criteria are explained in the following sections.
 
 \subsubsection{$J_{TDOA}(s)$ Error Criterion}
 

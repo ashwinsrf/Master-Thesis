@@ -25,10 +25,17 @@ Usually cross correlation is computed in the frequency domain using cross-spectr
 
 %\subsubsection{SRP Search}
 
-The SRP method starts with a look up procedure which associates each set of coordinate ($\rho,\phi,\theta$) to a given set of delays between each microphone pair. For instance, if we do not care about the range and use a 1 degree resolution, the SRP method associates 360*360=129600 angular positions to corresponding delays. The cross correlations at the particular delay are then computed. When the beamforming of the space and the computation of the cross correlation are completed the angular position that gives the maximum value at the beamformer output is chosen as an estimate of the main source location in the case of single source detection. For multiple sources, local maxima can also be selected. For a given position, the output of the SRP search is the sum of the cross correlation at each time delay found relative to each pair of microphone. It corresponds to the power output of the beamformer defined in equation \ref{eq:poweroutputbeamformer}
+The SRP method starts with a look up procedure which associates each set of coordinate ($\rho,\phi,\theta$) to a given set of delays between each microphone pair. For instance, if we do not care about the range and use a 1$\degree$  resolution, the SRP method associates 360*360=129600 angular positions to corresponding delays. The cross correlations at the particular delay are then computed. When the beamforming of the space and the computation of the cross correlation are completed the angular position that gives the maximum value at the beamformer output is chosen as an estimate of the main source location in the case of single source detection. For multiple sources, local maxima can also be selected. For a given position, the output of the SRP search is the sum of the cross correlation at each time delay found relative to each pair of microphone. It corresponds to the power output of the beamformer defined in equation \ref{eq:poweroutputbeamformer}
 \begin{equation}
     S^{SRP}(\rho,\phi,\theta)=\sum\limits_{i=0}^{M-1}\sum\limits_{j=0}^{M-1}{R_{x_i,x_j}[f_{i,j}(\rho,\phi,\theta)]}
 \end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/searchmapexample.png}
+    \caption{Steered Response Power map. A source is received by an array and the power map is computed. The source is located in the far field at azimuth 120\degree and elevation 40\degree. the maximum of the power map is an estimate of the source location}
+    \label{fig:srpmapexample}
+\end{figure}
 
 The SRP method estimates the source location ($\Hat{\rho},\hat{\phi},\hat{\theta}$) after creating the SRP search space such that
 
@@ -47,6 +54,34 @@ where
 \begin{equation}
     \psi_{ij}(k) = \frac{1}{|{X_{i}(k)X_{j}^*(k)}|}
 \end{equation}
+
+\subsection{Coherent sources}
+
+Two coherent sound sources are placed in the far field. Source 1 is a sin wave of frequency 150Hz crossing the array at azimuth 120\degree and elevation 60\degree. Source 2 is a sin wave of frequency 200Hz with azimuth 120\degree and elevation 60\degree. SRP maps are computed and displayed when each sources are separately turned on as well as when they emit together.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.7\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/source1_200hz.png}
+    \caption{SRP map of source 1}
+    \label{fig:s1_200hz}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.7\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/source2_150hz.png}
+    \caption{SRP map of source 2}
+    \label{fig:s2_150hz}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.7\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/source1-2_200_150hz.png}
+    \caption{SRP map of source 1 and 2}
+    \label{fig:s1_2_200_150}
+\end{subfigure}
+\end{figure}
+
 
 \subsubsection{Hybrid SRP-PHAT}
 

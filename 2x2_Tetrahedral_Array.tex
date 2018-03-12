@@ -2,14 +2,14 @@
 A unit vector $\overline{u}$ in 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation [3d space point fig here]. We get
 \begin{equation}
     \begin{split}
-        x_u&=sin(\theta)cos(\phi) \\
-        y_u&=sin(\theta)sin(\phi) \\
-        z_u&=cos(\theta),
+        x_u&=cos(\theta)cos(\phi) \\
+        y_u&=sin(\theta)cos(\phi) \\
+        z_u&=sin(\phi),
     \end{split}
 \end{equation}
 this can be denoted by the unit propagation vector ${a(\theta,\phi)}$ in the Cartesian coordinates
 \begin{equation}
-    a(\theta,\phi)=\begin{bmatrix}sin(\theta)cos(\phi) \\sin(\theta)sin(\phi) \\cos(\theta)\end{bmatrix},
+    a(\theta,\phi)=\begin{bmatrix}cos(\theta)cos(\phi) \\sin(\theta)cos(\phi) \\sin(\phi)\end{bmatrix},
 \end{equation}
 Suppose sound is travelling along the unit vector $\overline{u}$. Let 2 microphones be placed at positions $\overline{p_1}=(x_1,y_1,z_1)$ and $\overline{p_2}=(x_2,y_2,z_2)$.  Then $\overline{p_{12}}=\overline{p_{2}}-\overline{p_{1}}$, where ${\overline{p_{12}}}$ is the distance between the two microphones. The projection of this distance in the direction of $\overline{u}$ is simply $a(\theta,\phi)\overline{p_{12}}$ and the time it takes for sound to travel between the two microphones is then 
 \begin{equation}
@@ -36,8 +36,20 @@ Using atleast 4 microphones a spatial array can be constructed. The simplest spa
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{Figures/regulartetra.png}
-    \caption{Representation of a regular Tetrahedral geometry}
+    \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/unit_tetra.png}
+    \caption{Frontal view}
+    \label{fig:d1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Figures/unit_tetra_top.png}
+    \caption{Top view}
+    \label{fig:d2}
+\end{subfigure}
+    \caption{Representation of a regular Tetrahedral with unit side, centroid at origin and horizontally level lower face, front view and top view}
     \label{fig:regulartetra}
 \end{figure}
 

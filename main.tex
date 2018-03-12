@@ -36,6 +36,7 @@
 \usepackage[english]{babel}
 % Use the palatino font
 \usepackage[sc]{mathpazo}
+\usepackage{gensymb}
 \linespread{1.05}         % Palatino needs more leading (space between lines)
 % Choose the font encoding
 \usepackage[T1]{fontenc}
@@ -300,7 +301,7 @@
 \definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
 \definecolor{mylilas}{RGB}{170,55,241}
 
-\usepackage[backend=biber]{biblatex}
+\usepackage[backend=biber, sorting=none]{biblatex}
 \usepackage{booktabs}
 \addbibresource{articles.bib}
 \renewcommand{\thesection}{\hspace*{-1.0em}}
@@ -353,16 +354,17 @@
 
 
 \begin{document}
+\include{01_Preface}
 \tableofcontents
-\include{01_Introduction}
+\include{02_Introduction}
 \include{1_TDOA_Basics}
 \include{2_Models}
 \include{2x1_Environmental_Sound_Propagation}
+\include{2x2_Tetrahedral_Array}
 \include{3x1_GCC}
 \include{3x2_SRP}
 \include{3x3_Covariance}
 \include{3x4_Eigenvalue}
-\include{4x1TetrahedralArray}
 \include{90_Appendix}
 
 \printbibliography
