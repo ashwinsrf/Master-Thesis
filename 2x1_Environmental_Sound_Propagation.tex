@@ -25,27 +25,6 @@ An infinite line source can be viewed as a linear array of omni-directional poin
 \end{split}
 \end{equation}
 The DI is again 3 dB and the reduction is $10log2 = 3$ dB, every doubling of r. Highway traffic is modelled in a similar manner, assuming 3 dB drop every doubling of distance.
-\begin{figure}
-\includegraphics[width=0.8\textwidth]{Figures/airAbsorption.png}
-\caption{Total absorption of sound in air as a function of frequency. The curves range from 0 to 100\% relative humidity and are for 20\degree C \cite{evans1972atmospheric} (Notice that the y-axis units are per 1000ft).}
-\label{Fig:airAbsorption}
-\end{figure}
-\subsubsection{Atmospheric absorption}
-Sound energy converts to heat as it travels through air. The conversion of sound-to-heat in air can happen due to conduction, shear viscosity or by molecular relaxation. The portion of sound absorbed by air becomes increasingly important as distance of propagation increases. For a plane wave, the loudness $L$ at a distance $x$ from a position of known loudness $L_0$ is given by
-\begin{equation}
-    L= L_0 - k.x,
-\end{equation}
-where k depends on the humidity, temperature, pressure as well as the molecular composition of atmosphere and is proportional to the square of the frequency. Thus, higher frequencies are absorbed by a far greater magnitude. This causes air to act as a low-pass filter over large distances. Molecular relaxation \cite{bass1990atmospheric}, \cite{evans1972atmospheric} is an important factor and losses due to oxygen-water vapour molecular relaxation are predominant above 500Hz. The absorption due to this factor is atleast 2 dB/kilometer irrespective of humidity and increases rapidly with frequency. The total absorption below 200 Hz is less than 1 dB/kilometer and decreases with frequency. If the air is extremely dry ($< 10\%$ relative humidity), the oxygen-carbon dioxide relaxation becomes significant and causes an almost constant absorption down from 500Hz to 80Hz of around 2dB/kilometer. The total air absorption as a function of frequency can be seen in Fig. \ref{Fig:airAbsorption}.
-\subsubsection{Diffraction and barriers}
-Barriers are sometimes purposefully built to block the direct path from the sound source to the receiver. Sound reaches the receiver either going through the barrier or by diffracting around the top of the barrier. Ground reflections and multi-path-propagation may lead to multiple diffracted wave paths. For a barrier, the ISO 9613-2 \cite{ISO9613} provides the following equation for loss due to barrier insertion
-\begin{equation}
-    IL = 10log\bigg[3+\bigg(C_2\frac{\delta_1}{\lambda}\bigg)C_3K_{met}\bigg],
-\end{equation}
-where $\lambda=wavelength$. The value of $C_2$ determines if ground reflections are taken care of ($C_2 = 20$) or not ($C_2 = 40$), $C_3$ is a factor to take care of double diffraction due to a barrier of finite thickness (or two thin barriers placed some distance apart), $\delta_1$ is the difference in distance between the direct source-to-receiver path and the wave propagation path caused by the barrier, and $K_{met}$ is a correction factor for average downwind meteorological effects. For thin barriers the equation simplifies to 
-\begin{equation}
-    IL = 10log(3+40\frac{\delta_1}{\lambda}). 
-\end{equation}
-Over large distances even buildings act like barriers, with the rooftop causing double diffraction. ISO 9613-2 \cite{ISO9613} provides a simple empirical method to calculate attenuation due to buildings.
 \subsubsection{Ground effects}
 On acoustically hard surfaces such as non-porous asphalt or concrete, ground effects cause sound pressure to approximately double across a wide range of frequency. For porous surfaces, lower frequencies are enhanced while the higher frequencies get absorbed by the ground. When both source and receiver are close to the ground, interference of sound travelling directly from  source-to-receiver and sound reflected from the ground causes various ground effects. This interference can be both constructive or destructive. The pressure at a location $(x,y,z)$ due to a sound source can be given as a sum of the direct wave component, $P_{dir}$ and the reflected wave component $P_{ref}$ multiplied with the reflection coefficient R,
 \begin{equation}
@@ -100,8 +79,7 @@ Eq. \ref{Eq:SphPressure} becomes
     P(x,y,z)=P_{plane}(x,y,z) + P_{sph}(x,y,z),
 \end{equation}
 here the $P_{sph}(x,y,z)$ contribution is known as the ground wave component. It corresponds to the contribution from the vicinity of the image source in the ground plane. It includes a component known as the surface wave, which propagates close and parallel to a porous ground surface and decays with inverse square root of range.
-The ground itself impedes sound propagation by a variety of factors. More details can be found in \cite{attenborough2011outdoor} where the author provides a 4-parameter model that requires porosity, flow resistivity, tortuosity and pore shape factor for modelling ground impedance on outdoor sound propagation. 
-
+The ground itself impedes sound propagation by a variety of factors. Attenborough \cite{attenborough2011outdoor} created a more detailed 4-parameter model that requires porosity, flow resistivity, tortuosity and pore shape factor for modelling ground impedance on outdoor sound propagation. 
 \subsubsection{Meteorological effects}
 Wind and temperature have different effects on sound propagation. They directly change the speed of sound
 \begin{equation}
@@ -110,3 +88,24 @@ Wind and temperature have different effects on sound propagation. They directly 
 where $c_z$ is the speed of sound for temperature T above 0\degree C, $c_0$ is the speed of sound for no wind and 0\degree C, and $u_z$ is the wind velocity in the direction of propagation of sound. 
 
 They also cause acoustic gradients (varying refractive index) to occur in the atmosphere. Usually, with increasing height, the temperature decreases. This causes sound to travel slower with height. In the absence of wind this causes the sound to refract upwards leading to less sound received at the receiver. Wind speed can increase or decrease the sound speed. Generally, speed of wind increases with height, which causes the sound travelling along the wind to refract downwards. Conversely, if the sound is travelling against the wind, this would cause the sound to refract upwards.
+\begin{figure}[h]
+\includegraphics[width=0.8\textwidth]{Figures/airAbsorption.png}
+\caption{Total absorption of sound in air as a function of frequency. The curves range from 0 to 100\% relative humidity and are for 20\degree C \cite{evans1972atmospheric} (Notice that the y-axis units are per 1000ft).}
+\label{Fig:airAbsorption}
+\end{figure}
+\subsubsection{Atmospheric absorption}
+Sound energy converts to heat as it travels through air. The conversion of sound-to-heat in air can happen due to conduction, shear viscosity or by molecular relaxation. The portion of sound absorbed by air becomes increasingly important as distance of propagation increases. For a plane wave, the loudness $L$ at a distance $x$ from a position of known loudness $L_0$ is given by
+\begin{equation}
+    L= L_0 - k.x,
+\end{equation}
+where k depends on the humidity, temperature, pressure as well as the molecular composition of atmosphere and is proportional to the square of the frequency. Thus, higher frequencies are absorbed by a far greater magnitude. This causes air to act as a low-pass filter over large distances. Molecular relaxation \cite{bass1990atmospheric}, \cite{evans1972atmospheric} is an important factor and losses due to oxygen-water vapour molecular relaxation are predominant above 500Hz. The absorption due to this factor is atleast 2 dB/kilometer irrespective of humidity and increases rapidly with frequency. The total absorption below 200 Hz is less than 1 dB/kilometer and decreases with frequency. If the air is extremely dry ($< 10\%$ relative humidity), the oxygen-carbon dioxide relaxation becomes significant and causes an almost constant absorption down from 500Hz to 80Hz of around 2dB/kilometer. The total air absorption as a function of frequency can be seen in Fig. \ref{Fig:airAbsorption}.
+\subsubsection{Diffraction and barriers}
+Barriers are sometimes purposefully built to block the direct path from the sound source to the receiver. Sound reaches the receiver either going through the barrier or by diffracting around the top of the barrier. Ground reflections and multi-path-propagation may lead to multiple diffracted wave paths. For a barrier, the ISO 9613-2 \cite{ISO9613} provides the following equation for loss due to barrier insertion
+\begin{equation}
+    IL = 10log\bigg[3+\bigg(C_2\frac{\delta_1}{\lambda}\bigg)C_3K_{met}\bigg],
+\end{equation}
+where $\lambda=wavelength$. The value of $C_2$ determines if ground reflections are taken care of ($C_2 = 20$) or not ($C_2 = 40$), $C_3$ is a factor to take care of double diffraction due to a barrier of finite thickness (or two thin barriers placed some distance apart), $\delta_1$ is the difference in distance between the direct source-to-receiver path and the wave propagation path caused by the barrier, and $K_{met}$ is a correction factor for average downwind meteorological effects. For thin barriers the equation simplifies to 
+\begin{equation}
+    IL = 10log(3+40\frac{\delta_1}{\lambda}). 
+\end{equation}
+Over large distances even buildings act like barriers, with the rooftop causing double diffraction. ISO 9613-2 \cite{ISO9613} provides a simple empirical method to calculate attenuation due to buildings.
