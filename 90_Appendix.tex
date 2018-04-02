@@ -1,3 +1,41 @@
 \section{Appendix}
 
-Omologo and Svaizer used the term `global coherence field' in the 90's and mapped the level of `coherence' between two sensors to a source location in space \cite{omologo1994acoustic}.
+
+
+\subsection{Other outdoor effects}
+\subsubsection{Spreading loss} 
+The sound intensity from an omni-directional sound source drops as a function of distance due to wavefront spreading. The intensity I received at distance r from a source with power P, is given by
+\begin{equation}
+    I = \frac{P}{4\pi r^2}.
+\end{equation}
+This is due to spherical propagation, where the surface of the sphere has area $4\pi r^2$. In logarithm form this becomes
+\begin{equation}
+\begin{split}
+    10log(I) &= 10log(\frac{P}{4\pi r^2}) \\
+    L_p &= L_w - 20 log(r) - 11,
+\end{split}
+\end{equation}
+which means a reduction of $20log2 = 6 dB$, every doubling of r. This equation assumes uniform omni-directional directivity. For directional sources a Directivity Index DI can be added giving
+\begin{equation}
+    L_p = L_w + DI - 20 log(r) - 11.
+\end{equation}
+It is important to remember that such a directivity can be inherent to the source or might be induced due to the location of the source. An omni-directional source placed on a perfectly reflecting plane can only propagate sound into a hemisphere, in which case the DI is 3 dB.  
+An infinite line source can be viewed as a linear array of omni-directional point sources. The wavefront spread is cylindrical (surface area $= 2\pi r$),  which gives
+\begin{equation}
+\begin{split}
+    10log(I) &= 10log(\frac{P}{2\pi r}) \\
+    L_p &= L_w - 10 log(r) - 8,
+\end{split}
+\end{equation}
+The DI is again 3 dB and the reduction is $10log2 = 3$ dB, every doubling of r. Highway traffic is modelled in a similar manner, assuming 3 dB drop every doubling of distance.
+
+\subsubsection{Diffraction and barriers}
+Barriers are sometimes purposefully built to block the direct path from the sound source to the receiver. Sound reaches the receiver either going through the barrier or by diffracting around the top of the barrier. Ground reflections and multi-path-propagation may lead to multiple diffracted wave paths. For a barrier, the ISO 9613-2 \cite{ISO9613} provides the following equation for loss due to barrier insertion
+\begin{equation}
+    IL = 10log\bigg[3+\bigg(C_2\frac{\delta_1}{\lambda}\bigg)C_3K_{met}\bigg],
+\end{equation}
+where $\lambda=wavelength$. The value of $C_2$ determines if ground reflections are taken care of ($C_2 = 20$) or not ($C_2 = 40$), $C_3$ is a factor to take care of double diffraction due to a barrier of finite thickness (or two thin barriers placed some distance apart), $\delta_1$ is the difference in distance between the direct source-to-receiver path and the wave propagation path caused by the barrier, and $K_{met}$ is a correction factor for average downwind meteorological effects. For thin barriers the equation simplifies to 
+\begin{equation}
+    IL = 10log(3+40\frac{\delta_1}{\lambda}). 
+\end{equation}
+Over large distances even buildings act like barriers, with the rooftop causing double diffraction. ISO 9613-2 \cite{ISO9613} provides a simple empirical method to calculate attenuation due to buildings.

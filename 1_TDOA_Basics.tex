@@ -1,5 +1,5 @@
 \section{Direction of arrival using time delay information}
-\subsection{Time delay between a single microphone pair}\label{sec:TDOA}
+\subsection{TDOA of a single microphone pair}\label{sec:TDOA}
 
 When using a pair of microphones, sound from a particular source arrives at the two microphones at different times, based on the source distance to the particular microphone. For a pair of microphones located at $m_{1}$ and $m_{2}$, the time difference of arrival (TDOA) of a sound signal from a source located at s can be defined as:
 \begin{equation}
@@ -51,8 +51,77 @@ It can be shown that the cone approximation is the same as a far-field assumptio
 
 Now, given the TDOA between multiple microphone pairs, the source localization problem can be solved by triangulation. This triangulation problem can be solved for different variables ($\theta$, Source Distance or the Time Delay itself). The next section will detail the basics of solving such a problem. 
 
-\subsection{TDOA of N pair of microphones}\label{sec:TDOAN}
+\subsection{TDOA of a tetrahedral array}\label{sec:TDOAN}
 
+Let's define three Cartesian axis x,y,z with azimuth $\theta$ define by the projection of the DOA on the plan x-y and the elevation $\phi$ defined by the DOA angle from the x-y plan. The axis is shown in figure \ref{fig:3daxis}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{Figures/axis3d.png}
+    \caption{Cartesian axis used throughout the thesis}
+    \label{fig:3daxis}
+\end{figure}
+
+A unit vector $\overline{u}$ in 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation as described in figure \ref{fig:3daxis}.
+\begin{equation}
+    \begin{split}
+        x_u&=cos(\theta)cos(\phi) \\
+        y_u&=sin(\theta)cos(\phi) \\
+        z_u&=sin(\phi),
+    \end{split}
+\end{equation}
+this can be denoted by the unit propagation vector ${a(\theta,\phi)}$ in the Cartesian coordinates
+\begin{equation}
+    a(\theta,\phi)=\begin{bmatrix}cos(\theta)cos(\phi) \\sin(\theta)cos(\phi) \\sin(\phi)\end{bmatrix},
+\end{equation}
+Suppose sound is travelling along the unit vector $\overline{u}$. Let 2 microphones be placed at positions $\overline{p_1}=(x_1,y_1,z_1)$ and $\overline{p_2}=(x_2,y_2,z_2)$.  Then $\overline{p_{12}}=\overline{p_{2}}-\overline{p_{1}}$, where ${\overline{p_{12}}}$ is the distance between the two microphones. The projection of this distance in the direction of $\overline{u}$ is simply $a(\theta,\phi)\overline{p_{12}}$ and the time it takes for sound to travel between the two microphones is then 
+\begin{equation}
+    T_{12}=\frac{a(\theta,\phi)\overline{p_{12}}}{c},
+\end{equation} c being the speed of sound. For 4 microphones, a Least-Squares approach could be considered, with $^4C_2$ combinations possible. The 'correct' DOA is then the $a(\Theta,\Phi)$ which minimizes the cost function
+\begin{equation}
+    J(\Theta,\Phi) = \sum\bigg(T_{ij}-\frac{a(\Theta,\Phi)\overline{p_{ij}}}{c}\bigg)^2, \text{for } i,j \in \begin{pmatrix}4\\2\end{pmatrix}.
+\end{equation}
+
+Using atleast 4 microphones a spatial array can be constructed. The simplest spatial structure with 4 vertices is a tetrahedron (a triangular pyramid). The tetrahedron has 4 vertices, 4 faces and 6 edges. If the tetrahedron is regular then all the vertices are equally spaced from each other and every face is an equilateral triangle. Let's define a tetrahedral microphone array composed of 4 microphones at position p1, p2, p3, p3
+
+\begin{equation}
+    p1=\begin{bmatrix}-0.5 \\ 0 \\ 0\end{bmatrix}   
+    \hspace{0.8cm}
+    p2=\begin{bmatrix}0.5 \\ 0 \\ 0\end{bmatrix}
+    \hspace{0.8cm}
+    p3=\begin{bmatrix}0\\ -0.87 \\ 0\end{bmatrix}
+    \hspace{0.8cm}
+    p4=\begin{bmatrix}0 \\ -0.43\\0.70\end{bmatrix}
+\end{equation} 
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/unit_tetra.png}
+    \caption{Side view}
+    \label{fig:d1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/unit_tetra_top.png}
+    \caption{Top view}
+    \label{fig:d2}
+\end{subfigure}
+    \caption{Representation of a regular Tetrahedral with unit side, centroid at origin and horizontally level lower face, front view and top view}
+    \label{fig:regulartetra}
+\end{figure}
+
+
+
+
+
+
+
+
+
+\iffalse
 Each pair i of sensor gives a locus $\chi{i}(\{m_{i1},m_{i2}\},s)$ on which the source can be located. When more than one pair of sensor is used, the position of the source can be found at the intersection of each locus. Depending on the position of each sensor pair and the direction of arrival of the source, the intersection of all the locus could in theory be found $ ( s\in {\bigcap}_{i=0}^k \chi{i} )$. In practical, the DOA is corrupted by random noise process which influence the localization precision and therefore the locus of each microphone pair. In most case, the locus intersection is the empty set. $ ( {\bigcap}_{i=0}^k \chi{i} = \emptyset ) $
 
 
@@ -141,3 +210,4 @@ D(\chi_{i},s)=R_{i}.\sin{[\theta_{i}-\Theta(m_{i1},m_{i2},s)}]
 The estimators described above vary in term of performance under certain conditions. For a bi-linear array, Brandstein has shown that $J_{TDOA}(s)$ and $J_{DOA}(s)$ are more robust to great angle of incidence than $J_{D}(s)$. At low noise level, $J_{TDOA}(s)$ is proven to be slightly better than $J_{DOA}(s)$ but $J_{DOA}(s)$ perform better overall especially for long range source location. $J_{TDOA}(s)$ is better for broadside sources and low noise level but $J_{DOA}(s)$ is more robust for less favorable noise conditions
 
 %Pros and Cons of each estimators are sumarized in the following table.
+\fi
