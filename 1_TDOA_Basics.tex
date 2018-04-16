@@ -44,7 +44,7 @@ It can be shown that the cone approximation is the same as a far-field assumptio
 
 \begin{figure}
     \centering
-    \includegraphics{Figures/Far-field.png}
+    \includegraphics[width=0.6\textwidth]{Figures/Far-field.png}
     \caption{With far-field approximation it can be assumed that the sound waves incident on the pair of microphones are parallel (planar incidence).}
     \label{fig:my_label}
 \end{figure}
@@ -53,47 +53,18 @@ Now, given the TDOA between multiple microphone pairs, the source localization p
 
 \subsection{TDOA of a tetrahedral array}\label{sec:TDOAN}
 
-Let's define three Cartesian axis x,y,z with azimuth $\theta$ define by the projection of the DOA on the plan x-y and the elevation $\phi$ defined by the DOA angle from the x-y plan. The axis is shown in figure \ref{fig:3daxis}.
+A tetrahedron simplest spatial structure with 4 vertices (a triangular pyramid). The tetrahedron has 4 vertices, 4 faces and 6 edges. If the tetrahedron is regular then all the vertices are equally spaced from each other and every face is an equilateral triangle. A 1m aperture tetrahedral microphone array composed of 4 microphones at position $p_1, p_2, p_3, p_4$ is described by fig. \ref{fig:regulartetra}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics{Figures/axis3d.png}
-    \caption{Cartesian axis used throughout the thesis}
-    \label{fig:3daxis}
-\end{figure}
-
-A unit vector $\overline{u}$ in 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation as described in figure \ref{fig:3daxis}.
-\begin{equation}
-    \begin{split}
-        x_u&=cos(\theta)cos(\phi) \\
-        y_u&=sin(\theta)cos(\phi) \\
-        z_u&=sin(\phi),
-    \end{split}
-\end{equation}
-this can be denoted by the unit propagation vector ${a(\theta,\phi)}$ in the Cartesian coordinates
-\begin{equation}
-    a(\theta,\phi)=\begin{bmatrix}cos(\theta)cos(\phi) \\sin(\theta)cos(\phi) \\sin(\phi)\end{bmatrix},
-\end{equation}
-Suppose sound is travelling along the unit vector $\overline{u}$. Let 2 microphones be placed at positions $\overline{p_1}=(x_1,y_1,z_1)$ and $\overline{p_2}=(x_2,y_2,z_2)$.  Then $\overline{p_{12}}=\overline{p_{2}}-\overline{p_{1}}$, where ${\overline{p_{12}}}$ is the distance between the two microphones. The projection of this distance in the direction of $\overline{u}$ is simply $a(\theta,\phi)\overline{p_{12}}$ and the time it takes for sound to travel between the two microphones is then 
-\begin{equation}
-    T_{12}=\frac{a(\theta,\phi)\overline{p_{12}}}{c},
-\end{equation} c being the speed of sound. For 4 microphones, a Least-Squares approach could be considered, with $^4C_2$ combinations possible. The 'correct' DOA is then the $a(\Theta,\Phi)$ which minimizes the cost function
-\begin{equation}
-    J(\Theta,\Phi) = \sum\bigg(T_{ij}-\frac{a(\Theta,\Phi)\overline{p_{ij}}}{c}\bigg)^2, \text{for } i,j \in \begin{pmatrix}4\\2\end{pmatrix}.
-\end{equation}
-
-Using atleast 4 microphones a spatial array can be constructed. The simplest spatial structure with 4 vertices is a tetrahedron (a triangular pyramid). The tetrahedron has 4 vertices, 4 faces and 6 edges. If the tetrahedron is regular then all the vertices are equally spaced from each other and every face is an equilateral triangle. Let's define a tetrahedral microphone array composed of 4 microphones at position p1, p2, p3, p3
-
-\begin{equation}
-    p1=\begin{bmatrix}-0.5 \\ 0 \\ 0\end{bmatrix}   
-    \hspace{0.8cm}
-    p2=\begin{bmatrix}0.5 \\ 0 \\ 0\end{bmatrix}
-    \hspace{0.8cm}
-    p3=\begin{bmatrix}0\\ -0.87 \\ 0\end{bmatrix}
-    \hspace{0.8cm}
-    p4=\begin{bmatrix}0 \\ -0.43\\0.70\end{bmatrix}
-\end{equation} 
-
+%%\begin{equation}
+%%    p_1=\begin{bmatrix}-0.5 \\ 0 \\ 0\end{bmatrix}   
+%%    \hspace{0.8cm}
+%%    p_2=\begin{bmatrix}0.5 \\ 0 \\ 0\end{bmatrix}
+%%    \hspace{0.8cm}
+%%    p_3=\begin{bmatrix}0\\ -0.87 \\ 0\end{bmatrix}
+%%    \hspace{0.8cm}
+%%    p_4=\begin{bmatrix}0 \\ -0.43\\0.70\end{bmatrix}
+%%\end{equation} 
+%%%
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
@@ -105,20 +76,47 @@ Using atleast 4 microphones a spatial array can be constructed. The simplest spa
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=1\textwidth]{Figures/unit_tetra_top.png}
+    \includegraphics[width=1\textwidth]{Figures/unit_tetra_top2.png}
     \caption{Top view}
     \label{fig:d2}
 \end{subfigure}
-    \caption{Representation of a regular Tetrahedral with unit side, centroid at origin and horizontally level lower face, front view and top view}
+    \caption{Representation of a regular tetrahedron with unit sides, centroid at origin and horizontally level lower face, front view and top view}
     \label{fig:regulartetra}
 \end{figure}
 
+Let's define three Cartesian axis X,Y,Z with spherical coordinates as shown in figure \ref{fig:3daxis}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figures/3dCoord.png}
+    \caption{Cartesian axis used throughout the thesis}
+    \label{fig:3daxis}
+\end{figure}
 
-
-
-
-
+A unit vector $\hat{u}$ in this 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation as described in figure \ref{fig:3daxis}.
+\begin{equation}
+    \begin{split}
+        x_u&=cos(\theta)cos(\phi) \\
+        y_u&=sin(\theta)cos(\phi) \\
+        z_u&=sin(\phi),
+    \end{split}
+\end{equation}
+this can be denoted by the unit propagation vector ${\hat{a}(\theta,\phi)}$ in the Cartesian coordinates
+\begin{equation}
+    \hat{a}(\theta,\phi)=\begin{bmatrix}cos(\theta)cos(\phi) \\sin(\theta)cos(\phi) \\sin(\phi)\end{bmatrix},
+\end{equation}
+Suppose sound is travelling along the unit vector $\hat{u}$. Let 2 microphones be placed at positions $\hat{p}_1=(x_1,y_1,z_1)$ and $\hat{p}_2=(x_2,y_2,z_2)$.  Then $\hat{p}_{12}=\hat{p}_{2}-\hat{p}_{1}$, where ${\hat{p_{12}}}$ is the distance between the two microphones. The projection of this distance in the direction of $\hat{u}$ is simply $\hat{a}(\theta,\phi)\cdot\hat{p}_{12}$ and the time it takes for sound to travel between the two microphones is then 
+\begin{equation}
+    \hat{t}_{12}=\frac{\hat{a}(\theta,\phi)\cdot\hat{p}_{12}}{c},
+\end{equation} c being the speed of sound. In case of M microphones in arbitrary 3D position, $^MC_2$ combinations of pairs are possible, giving $^MC_2$ possible TDOA estimates. However, not all the pairs are linearly independent. Given 3 microphones i, j and k, the time delays $\hat{t}$ satisfy:
+\begin{equation}
+    \hat{t}_{i,j}=\hat{t}_{i,k}+\hat{t}_{j,k}
+    \label{Eq:linearDep}
+\end{equation}
+Thus, only M-1 linearly independent combinations of microphone pairs exists. This can be written as the vector $\hat{t}=(\hat{t}_{1,2}.....\hat{t}_{1,M})^T$ in the M-1 dimensional subspace S $\subset$ $^MC_2$. Thus, given a tetrahedral array, only 3 linearly independent combinations of cross-correlations exist. A least-Squares approach could be considered, with the 3 use-able combinations. The `correct' DOA is then the $a(\Theta,\Phi)$ which minimizes the cost function
+\begin{equation}
+    J(\Theta,\Phi) = \sum\limits_{j=2}^4\bigg(T_{1j}-\frac{\hat{a}(\Theta,\Phi)\hat{p}_{1j}}{c}\bigg)^2.
+\end{equation}
 
 
 \iffalse
