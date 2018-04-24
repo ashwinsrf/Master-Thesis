@@ -8,21 +8,18 @@ Beamforming techniques for sound localization have been study intensively over t
 %DAMAS was acknowledged a major breakthrough in array processing. At first research was mainly focused on aeroacoustic for the development of near-field sound localization system but it seems that a new enthusiasm has taken over scientists trying to solve other sound localization problems. 
 %While the DAMAS method is mainly designed for near field measurements in the range of the array aperture size, a new deconvolution method has been proposed [\cite{zhao2015large}, \cite{zhao2017large}] where a small aperture array is used to measure source signal in the far field. The principle behind point spread function is discussed in the following section. Then a review of the underlying principles of the main deconvolution algorithms is given, and finally a specific method for coherent and incoherent sources localization is discussed.
 A perfect array will detect a point precisely at the actual source location and nothing elsewhere. This, however, is not the general case. For example, given a single pair of microphones, and assuming far-field incidence, the only information that can be concluded from a single point source is the angle of incidence on the array. This angle is a vector combination of source azimuth and elevation. This leads to a circle around the array where the source might be located (circular maximum peak). This circle is the base of the cone resulting from the cone approximation discussed previously.
-
 %\begin{figure}[H]
 %    \centering
 %    \includegraphics[width=0.98\textwidth]{Figures/2mic1src.png}
 %    \caption{Figure depicts a source located at $50\degree$ azimuth and $60\degree$ elevation (orange dot). Two microphones (blue dots) will be used to localize the source.}
 %    \label{fig:2mic1srcPos}
 %\end{figure}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/2mic1srcRes.png}
     \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The red dot indicates the actual source location.}
     \label{fig:2mic1src}
 \end{figure}
-
 If three microphones are placed in a horizontal equilateral triangle, we get three circles (three possible pairs of microphones) from localization. The maximum peak occurs at 2 locations with azimuth=50$\degree$ and elevation=$\pm 60\degree$.
 \begin{figure}[H]
     \centering
@@ -30,150 +27,132 @@ If three microphones are placed in a horizontal equilateral triangle, we get thr
     \caption{SRP-PHAT is run to localize the source with 3 microphones.}
     \label{fig:3mic1src}
 \end{figure}
-
-For a tetrahedral array, the point spread function is a combination of circles from the 6 possible microphone pairs. This time the main peak occurs at exactly one point. However, since only 3 pairs out of the 6 are linearly independent (Eq. \ref{Eq:linearDep}), the localization should really be done considering only 3 of those pairs. The result in shown in fig. \ref{fig:4mic1srcInd}
+For a tetrahedral array, the point spread function is a combination of circles from the 6 possible microphone pairs. This time the main peak occurs at exactly one point. However, since only 3 pairs out of the 6 are linearly independent (Eq. \ref{Eq:linearDep}), the localization should really be done considering only 3 of those pairs. The result in shown in fig. \ref{fig:4mic1srcInd}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRes.png}
     \caption{SRP-PHAT is run to localize the source with a tetrahedral array.}
     \label{fig:4mic1src}
 \end{figure}
-
-
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1src.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcRes.png}
     \caption{SRP-PHAT is run to localize the source with a tetrahedral array but only linearly independent microphone pairs are considered}
     \label{fig:4mic1srcInd}
 \end{figure}
-The result in fig. \ref{fig:4mic1src} is applicable only in ideal conditions (zero noise, no reflections and perfectly planar propagation). The localization result obtained in noisy conditions, is depicted in fig. \ref{fig:4mic1srcNoisy}. Note that the color bars for the figures depicted are of the same color scale. The localization performance deteriorates as the SNR drops. The result is similar to the results for PHAT with 2 microphones discussed earlier as the underlying process in SRP-PHAT is still PHAT. As can be seen in the figure, even in ideal conditions, the localization results contain many peaks of varying heights. This is due to summing the cross-correlation responses of a non-linear array (Eq. \ref{eq:srpSum}). If the array were linear, the localization circles from each pair would all overlap completely. In case of a tetrahedral array, the localization circles from the possible microphone pairs are not co-planar. This is because all the edges of a tetrahedron point in the different directions. The obvious problem here is multi-source detection. If multiple sources are playing at different levels, how do we determine if a detected peak is a real source or a relic from another higher level source? The methods to do so form the basis of deconvolution methods. A simple deconvolution approach could be to penalize sources detected only by a subset of the microphone pair combinations. This could be done by taking a product and not a sum in Eq. \ref{eq:srpSum}. This way, if a peak is caused by a single localization circle, the cross-correlation values from other microphone pairs would be close to zero, and thus would scale the false peak down. The localization results from this are given in fig. \ref{fig:4mic1srcNoisyProd}. Fig. \ref{fig:4mic2srcNoisyCompare} compares the localization result for two equally loud sources, this time located at (azimuth, elevation) = (-20, -30) and (50, 60), with normal SRP-PHAT and product-SRP-PHAT. The results are convincingly better for simulations.  
-
+Considering only independent microphones, Eq. \ref{eq:srpSum} can be rewritten as, 
+\begin{equation}
+    S_{SRP}(\theta,\phi)=\sum\limits_{i=1}^{M-1}{R_{x_0,x_i}[f_{0,i}(\theta,\phi)]}
+     \label{eq:srpSumInd}
+\end{equation}
+\subsubsection{Effect of noise}
+The result in fig. \ref{fig:4mic1srcInd} is applicable only in ideal conditions (zero noise, no reflections and perfectly planar propagation). The localization result for noisy conditions is depicted in fig. \ref{fig:4mic1srcNoisy}. As expected, the performance deteriorates as the SNR drops. 
 \begin{figure}[H]
+\begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1src20.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcRes20.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1src6.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcRes0.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1src0.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcResNeg10.png}
 \end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcNeg6.png}
-\end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT localization results with SNR = 20dB, SNR = 6dB, SNR = 0dB, SNR = -6dB}
+\caption{Figures depict from top-to-bottom SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -10dB}
 \label{fig:4mic1srcNoisy}
 \end{figure}
-
- \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd20.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd6.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd0.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProdNeg6.png}
-\end{subfigure}
-\caption{Figures depict from top-to-bottom product-SRP-PHAT localization results  with SNR = 20dB, SNR = 6dB, SNR = 0dB, SNR = -6dB}
-\label{fig:4mic1srcNoisyProd}
-\end{figure}
-
- \begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic2srcSumNeg6.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic2srcProdNeg6.png}
-\end{subfigure}
-\caption{Figures depict from localization results with normal SRP-PHAT (top) and product-SRP-PHAT (bottom)}
-\label{fig:4mic2srcNoisyCompare}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic2srcProdNeg6Div.png}
-    \caption{Product-SRP-PHAT is run to localize 2 sources located at (azimuth, elevation) = (-20, -30) and (50, 60) with a tetrahedral array. The result is divided by 3 and normalized before visualization to maintain the level difference between the different sources.}
-    \label{fig:4mic2srcNoisyDiv}
-\end{figure}
-
-The drawback of using product-SRP-PHAT is that the sound level difference between the different sound sources is lost. In normal SRP-PHAT, the array magnitude response at a particular azimuth and elevation could be averaged over all microphone pair combinations. Then the level difference between 2 sources is maintained. In product-SRP-PHAT this would not be the case. However if it is assumed that a particular source will have similar magnitude response for all microphone pairs (which is not a strong assumption in far-field), then taking the cubic root of multiplied power from the possible microphone pairs, the level difference can be maintained. When plotted on dB scale, that means a simple division by 3 depicted in fig. \ref{fig:4mic2srcNoisyDiv}. Since the division has the effect of reducing the dB difference between the noise floor and the main peak, the result deteriorates.
-
+\subsubsection{Effect of temperature}
+Temperature affects the speed of sound and thus affects the delay time between the microphone pairs. During measurement, if it is assumed to be room temperature, this could lead to errors in the localization results. Fig.\ref{fig:4mic1srcTemp} depicts the effect of temperature on localization results, where wave files received by the tetrahedral microphone array at temperatures of $0\degree C$, $20\degree C$ and $40\degree C$ are simulated. Then the localization is run assuming the speed of sound to be 343m/sec in every case. As can be seen in the figure, an error in recording temperature has the effect of `de-focusing' the main peak.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSum0deg.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{0.96\textwidth}
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSum20deg.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSum0deg.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
     \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSum40deg.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT localization results with at temperatures of $0\degree C$, $20\degree C$ and $40\degree C$. SNR = 20dB for every case.}
+\caption{Figures depict from top-to-bottom SRP-PHAT localization results with at temperatures of $20\degree C$, $0\degree C$ and $40\degree C$. SNR = 20dB.}
 \label{fig:4mic1srcTemp}
 \end{figure}
+\subsubsection{Effect of wind}
+Wind speed effects the speed of sound in the direction of propagation. Delays between different array pairs would be affected depending on where the SRP search is looking and from what direction the wind is blowing. If wind blows perpendicular to the direction of propagation of the sound from the source, then it does not affect the localization. Fig.\ref{fig:4mic2srcWind} depicts the effect of wind on localization results at wind of 10$m/s$ blowing at $90\degree$, $45\degree$ and $180\degree$ to a source at ($50\degree$,$60\degree$) without any wind correction. It can be seen that when wind blows at $90\degree$, it does not affect the localization results. The magnitude of error when wind blows non-perpendicular to the sound propagation direction depends on the wind speed and the degree of alignment with the wind direction.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcWind90.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcWind45.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcWind180.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom SRP-PHAT localization results with wind of $10 m/sec$ blowing $90\degree$, $45\degree$ and $180\degree$ to the source sound propagation direction. SNR = 20dB.}
+\label{fig:4mic2srcWind}
+\end{figure}
+\subsubsection{Effect of ground reflections}
+Sound received from a far-field sound source consists of the plane wave and the spherical wave component (Eq. \ref{Eq:GroundWave}). The spherical wave component creates a horizontal ground wave with the ground and quickly attenuates with distance. The plane wave creates a reflected wave with ground (image source) whose magnitude depends on the acoustic reflection coefficient of the ground material. Rudimentary simulations for a source located at $(\theta,\phi)$ can be made assuming image sound source located at $(\theta,-\phi)$. Fig. \ref{fig:4mic1srcRef} shows the localization results with source at ($50\degree$,$60\degree$) for different ground reflection coefficients. The microphone pairs in the tetrahedral array that are parallel to the ground locate both the source and the image on the same cone. This causes the image to be localized at a higher level than it actually is.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRef100.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRef60.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRef10.png}
+\end{subfigure}
 
-\subsubsection{Effect of temperature}
-Temperature affects the speed of sound and thus affects the delay time between the microphone pairs. During measurement, if it is assumed to be room temperature, this could lead to errors in the localization results. Fig.\ref{fig:4mic1srcTemp} depicts the effect of temperature on localization results, where wave files received by the tetrahedral microphone array at temperatures of $0\degree C$, $20\degree C$ and $40\degree C$ are simulated. Then the localization is run assuming the speed of sound to be 343m/sec in every case. As can be seen in the figure, an error in recording temperature has the effect of `de-focusing' the main peak. This could lead to even great localization errors if naive deconvolution algorithms (like the product-SRP-PHAT) are then directly applied to the result. 
+    \caption{Figures depict from top-to-bottom SRP-PHAT localization results with ground reflection coefficients (R) of 1, 0.6 and 0.1. Even though the image source should get significantly weaker for R=0.1, it does not as it is supported by the localization cones from microphones parallel to the ground.}
+    \label{fig:4mic1srcRef}
+\end{figure}
+\subsubsection{Effect of `phase' noise}
+Coming Soon!
+\newpage
+\subsubsection{Effect of angular resolution of localization}
+Similar to the 2D angular resolution due to a single pair (Fig. \ref{fig:res_diff}), the tetrahedral array has its own 3D  angular resolution depending on the sample rate and the array aperture size. Fig. \ref{fig:res_diff_3d} describes the angular resolution of a tetrahedral array of aperture 1m for different sample rates. If the SRP search space is $360\degree$ by $180\degree$, and the resolution of search is $1\degree$, there will be some angular locations where the delay in sample between a microphone pair is fractional. For simplicity, this fractional delay is rounded for all plots in this thesis. This means that certain locations will contain duplicate data from the nearest integral delay location to themselves. Obviously, the resolution improves for higher sample rate.
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSumWind0.png}
+    \includegraphics[width=0.7\textwidth]{Figures/res3d12k.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSumWind10.png}
+    \includegraphics[width=0.7\textwidth]{Figures/res3d48k.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSumWind20.png}
+    \includegraphics[width=0.7\textwidth]{Figures/res3d192k.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT localization results with wind of $0 m/sec$, $10 m/sec$ and $20 m/sec$. 2 sources located at (azimuth, elevation) = (-20, -30) and (50, 60) are localized with at wind (azimuth,elevation) = (50,0) and SNR = 20dB for every case.}
-\label{fig:4mic2srcWind}
+
+    \caption{Figures depict from top-to-bottom SRP-PHAT angular resolution of localization with sample rate of 12kHz, 48kHz and 192kHz.}
+    \label{fig:res_diff_3d}
 \end{figure}
-
-\subsubsection{Effect of wind}
-Wind speed effects the speed of sound in the direction of propagation. Delays between different array pairs would be affected depending on where the SRP search is looking and from what direction the wind is blowing. If wind blows perpendicular to the direction of propagation of the sound from the source, then it does not affect the localization. In case of multiple sources, the extent of errors due to wind will depend on the source location. Assuming wind to be blowing level (horizontally), wind direction can be described by its magnitude in m/sec and its azimuth. Fig.\ref{fig:4mic2srcWind} depicts the effect when localizing two equally loud sources without any wind correction, located at (azimuth, elevation) = (-20, -30) and (50, 60) for various conditions.
-
-\subsubsection{Effect of ground reflections}
-Sound received from a far-field sound source consists of the plane wave and the spherical wave component (Eq. \ref{Eq:GroundWave}). The plane wave components is the only component simulated so far above. The ground wave which is the spherical wave component needs to be considered as well. It is the contribution of the image created by the source with the ground. The location of this reflected sound is in vicinity of the image and depends on the smoothness of the ground material. Its magnitude depends on the magnitude of absorption of sound by the ground. Rudimentary simulations for a source located at $(\theta,\phi)$ can be made assuming sound sources located at $(\theta,-\phi)$ and $(\theta,0)$. Fig. \ref{fig:4mic1srcRef} shows the localization results with the same source located at those locations. More complex reflections are not currently planned for simulation purposes.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSumRef.png}
-    \caption{SRP-PHAT is run to localize a source located at (azimuth, elevation) = (50, 60). The source is also copied at locations (50,0) and (50,-60).}
-    \label{fig:4mic1srcRef}
-\end{figure}
+\subsubsection{Effect of change in aperture size}d

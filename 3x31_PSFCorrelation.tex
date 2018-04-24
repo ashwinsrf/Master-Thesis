@@ -1,5 +1,81 @@
 \subsection{Deconvolution of the array response}
 
+As can be seen in fig. \ref{fig:4mic1srcInd}, even in ideal conditions, the localization results from SRP-PHAT contain many peaks of varying heights. This is due to summing the cross-correlation responses of a non-linear array (Eq. \ref{eq:srpSumInd}). If the array was linear, the localization circles from each pair would all overlap completely. In case of a tetrahedral array, the localization circles from the possible microphone pairs are not co-planar. This is because all the edges of a tetrahedron point in the different directions. The obvious problem here is in multi-source detection. If multiple sources are playing at different levels, how do we determine if a detected peak is a real source or a pseudo-source from another higher level source? The methods to do so form the basis of deconvolution methods for SRP-PHAT.
+
+\subsection{Deconvolution history}
+Coming Soon!
+\newpage
+\subsubsection{Product-SRP-PHAT}
+A simple deconvolution approach could be to penalize sources which are only detected by a subset of the microphone pair combinations. This could be done by taking a product and not a sum in Eq. \ref{eq:srpSumInd}.
+\begin{equation}
+    S_{SRP}(\theta,\phi)=\prod\limits_{i=1}^{M-1}{R_{x_0,x_i}[f_{0,i}(\theta,\phi)]}
+     \label{eq:srpProdInd}
+\end{equation}
+This way, if a peak is caused by a single localization circle, the cross-correlation values from other microphone pairs would be close to zero, and thus would scale the false peak down. The localization results from this are given in fig. \ref{fig:4mic1srcNoisyProd}.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd20.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd0.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProdNeg6.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom product-SRP-PHAT localization results  with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\label{fig:4mic1srcNoisyProd}
+\end{figure}
+\newpage
+The drawback of using product-SRP-PHAT is that the sound level difference between the different sound sources is lost. In normal SRP-PHAT, the array magnitude response at a particular azimuth and elevation is averaged over all microphone pair combinations. Then the level difference between 2 sources is maintained. In product-SRP-PHAT this would not be the case. However if it is assumed that a particular source will have similar magnitude response for all microphone pairs (which is not a strong assumption in far-field), then taking source power $P_{SRP}={S_{SRP}}^{1/M}$, the level difference can be maintained.  Fig. \ref{fig:4mic2srcNoisyCompare} depicts the results of product-SRP-PHAT after level correction.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd20Corr.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd0Corr.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures//Ind4mic1srcProdNeg6Corr.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom level corrected product-SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\label{fig:4mic2srcNoisyCompare}
+\end{figure}
+\subsubsection{Minimum power SRP-PHAT}
+Another deconvolution approach can be to use the far-field assumption again, to assume that the power received from a single source to all microphone pairs is the same. In that case, if, the minimum power between the microphone pair is assumed to be the true power (instead of summing), peaks which are detected only by a subset of microphone arrays would disappear automatically and the deconvolution problem can be solved directly. Fig. \ref{fig:4mic1srcNoisyMinPow} shows the results. Even in adverse conditions of -6 dB, the algorithm is fairly able to detect the source at $(50\degree, 60\degree)$. 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcMin20.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcMin0.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcMinNeg6.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom minimum power SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\label{fig:4mic1srcNoisyMinPow}
+\end{figure}
+The drawback of both product-SRP-PHAT and Minimum power SRP-PHAT is that in case of localizing point sources, even a minor error in temperature or wind recordings has the potential of not detecting the sound source completely. In real life however, the source is rarely a point source.
+
+\subsection{Other Deconvolution methods}
 CLEAN is an algorithm proposed by Jan Högbom in 1974 \cite{1974A&AS...15..417H} to perform the deconvolution of images in radio astronomy. Högbom observed the sky images being polluted by what he described as the "dirty beam". This "dirty beam" is the distortion introduced in the system output when the input is subject to a point source. It relates to the point spread function (PSF) in optic or the array response in our case. The CLEAN algorithm removes the side lobes of the beamformer when the PSF is known in advance throught simulation or measurement. CLEAN-SC is an extension of the CLEAN algorithm but does not rely on knowing the PSF in advance, it uses the coherence between the sidelobes and the main beam to identify the PSF and retrieve the level of the sources. Usually efficient deconvolution is performed in the frequency domain when the PSF is shift-invariant but in our case the PSF change for every scanned position as the array response is different therefore it can become challenging to perform the deconvolution on a real time system. The CLEAN and CLEAN-SC algorithm and some notation will be introduced as well as the algorithm issues. Methods to overcome those issues are also discussed.
 
 \subsubsection{CLEAN deconvolution of the beamformed maps}
