@@ -1,43 +1,31 @@
 \newpage
 
-\section{Anechoic Chamber measurements}
+\subsection{Measurement journals}
 
-\subsection{Purpose}
+\subsubsection{Experiment 1: Retrieving single source position}
 
-The purpose of this experiment is to test our sound localization algorithms in a controlled environment. An experiment is set up in the Anechoic chamber where a tetrahedral array receives sound waves emitted by a point source. The source position is fixed and the microphone array is rotated aorund its axis in order to change the receiving angle of the wave. A diagram of the experiment is displayed in figure \ref{fig:Anechoic1} where the two test configurations are shown: 0 and 30 degree.  The source is chosen to be a pink noise as in our simulation but recording of a 300Hz sinusoïd are performed to check the delay between the microphones. In order to recreate the far field condition in the limited space of the anechoic chamber the array is placed as further away from the source and the array aperture is reduced in order to reduce the size of the array and obtain a better plane wave propagation. 
-
-\subsection{Diagram and pictures}
-
-
+The purpose of this experiment is to test the sound localization algorithms in a controlled environment. A tetrahedral array receives sound waves emitted by a point source and its location is  retrieved. The point source position is fixed and the microphone array is rotated around its axis in order to change the receiving angle of the wave. A diagram of the setup is display in figure \ref{fig:Anechoic1} where the two point source position are shown: 90 and 30 degree.  The source is chosen to be a pink noise as in our simulation but recording of a 300Hz sinusoid are performed to check the delay between the microphones. In order to recreate the far field condition in the limited space of the anechoic chamber the array is placed as further away from the source and the array aperture is reduced in order to reduce the size of the array and obtain a better plane wave propagation. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{Figures/Anechoic1.png}
+    \includegraphics[width=0.7\textwidth]{Figures/Anechoicexp1.png}
     \caption{Diagram of the experiment}
     \label{fig:Anechoic1}
 \end{figure}
  
- 
- 
- 
 
+\subsubsection{Stimuli and settings}
 
-\subsection{Stimuli and settings}
-
-The point source is emitted by a Brüel \& Kjær omnisource type 4296 with operating frequency of 100 to 5000 Hz. The Brüel \& Kjær PULSE system is used to record the sound picked up by the microphone array and the operating frequency of the system is 131072 Hz which is the highest sampling frequency available on the system. The prototype microphone array allows to adjust the aperture size from 0,1m to 1m. As discussed earlier the aperture is reduced to 0,395m. Assuming that strong periodicity exist in the signal, the array could in theory work with waves of frequency up to 874 Hz before aliasing occurs. In our case where there is no strong periodicity, we distinguish noise with much higher frequency \ref{REF}
+The point source is created by a Brüel \& Kjær omnisource type 4296 with operating frequency of 100 to 5000 Hz. The Brüel \& Kjær PULSE system is used to record the sound picked up by the microphone array and the operating frequency of the system is 131072 Hz which is the highest sampling frequency available on the system. Algorithm parameters are temperature: 22 $\degree$ and speed of wind: 0 m/s. The prototype microphone array allows to adjust the aperture size from 0,1m to 1m. As discussed earlier the aperture is reduced to 0,395m. When strong periodicity in the signal, the array can in theory work with waves of frequency up to 874 Hz before aliasing occurs. In our case there is no strong periodicity when we are using pink noise as sound sources, much higher frequencies can be input \ref{REF}.
 
 \begin{equation}
     f=\frac{c}{\lambda}=\frac{345}{0,395} \approx 874 (Hz)
 \end{equation}
 
-
-
  
+\subsubsection{Delay between the microphones}
  
- \subsection{Delay between the microphones}
- 
- In order to know the accuracy of the measurements, sample delay is measured at a single frequency. In order to avoid the pressure field frequency zone of the anechoic chamber and array aliasing,  a sin wave of 300 Hz is choosen. A single frequency is chosen therefore this measurement is representative for the group delay at this representative frequency. 
- 
+ In order to know the accuracy of the measurements, sample delay is measured at a single frequency. In order to avoid the pressure field frequency zone of the anechoic chamber and array aliasing,  a sin wave of 300 Hz is choosen. A single frequency is chosen to avoid group delay issues.  
  
  \begin{figure}[H]
     \centering
@@ -56,37 +44,118 @@ The point source is emitted by a Brüel \& Kjær omnisource type 4296 with opera
     Mic 3 &   &   & X  &-61  \\ \hline
     Mic 4 &   &   &    & X   \\ \hline
   \end{tabular}
-  \captionof{table}{Sample delay measured between the microphones at 0 incidence}
+  \captionof{table}{Sample delay measured between the microphones at 0 incidence (Fs= 131072Hz)}
 \end{center}
+
+Variation in delay are due to the source position inaccuracies or could be due to the plane wave approximation not holding. Therefore wider peaks are to be expected and a slight shift from the zero degree position. The microphones are not calibrated in this experiment as we can see difference in amplitude are noticeable.
  
+\subsubsection{Results}
+
+Wave files recorded by the pulse system are used by the algorithm. The script "NAMEOFTHESCRIPT" is run and the energy maps of the SRP-PHAT and minimum power SRP-PHAT algorithms are computed and display in the following part.
 
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[t]{0.5\textwidth}
+    \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.9\textwidth]{Figures/IMG_7337.png}
-    \caption{B\&K Omnisource}
-    \label{fig:Omnisource}
-\end{subfigure}%
-\begin{subfigure}[t]{0.5\textwidth}
-        \centering
-    \includegraphics[width=0.9\textwidth]{Figures/Arraymicrophone.png}
-    \caption{Prototyped microphone array}
-    \label{fig:Array}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0Deg1SrcMinPo.png}
 \end{subfigure}
-\end{figure} 
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0degreeMinPow.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 0 degree}
+\end{figure}
 
-
-
-\subsection{AAU number List}
-
-
+As expected the source position is not exactly spot on at 90 degree azimuth incidence also we observe a slight elevation of the source. This is explained by the top microphone being on the same horizontal axis as the acoustic center of the sound source thus creating a slight shift up. This shift can also be explained by the inaccuracies in the microphone positions on the microphone array. The prototype microphone array allow the 3 microphones on the horizontal axis to move up and down in order to adjust the microphone array aperture relative to the "fixed" top microphone. Therefore there might be a maladjustment in the position of the 3 lower microphones relative to the top microphone thus creating an incorrect position on the vertical axis and ultimately an error in the localization. The height of the microphone array is later increase in order to place the 3 lower microphones on the same vertical axis as the acoustic center of the sound source. As will be seen in the following graphs of the sound source at 30 $\degree$ azimuth the elevation error is reduced. No further investigation are done. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{Figures/pinknoise.png}
-    \caption{Source stimuli}
-    \label{fig:pinknoise}
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeNormal.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeMinPow.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 30 degree}
 \end{figure}
+
+\newpage
+\subsubsection{Experiment 2: Retrieving the multi sources location and level}
+
+An other experiment is setup in the anechoic chamber with focus on retrieving the relative source levels difference of two sources playing at the same time. One source is placed
+at 90 $\degree$ azimuth and play a pink noise at 46dBA, the second source is placed at 130 $\degree$ azimuth and play an uncorrelated pink noise at 52dbA. The files are generated in matlab and low frequencies are filter out in order to accommodate for the speaker used. Two ball speakers are used to play the source signal and the aperture size of the array is 0,395m. Temperature of the room is 22 $\degree$ and wind is 0 m/s.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/AnechoicPic.jpg}
+    \caption{Picture of the set up. The anechoic chamber was filled with other setup therefore the sources has been replaced by red dots for clarity. 90 and 130 $\degree$ azimuth are also drawn on top of the picture.}
+    \label{fig:Anechoicpic1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/Anechoicexp3.png}
+    \caption{Diagram of the experiment}
+    \label{fig:Anechoicexp3}
+\end{figure}
+
+\subsubsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeNormal.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeMinPow.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 30 degree}
+\end{figure}
+
+
+%
+%\begin{figure}[H]
+%    \centering
+%    \begin{subfigure}[t]{0.5\textwidth}
+%    \centering
+%    \includegraphics[width=0.9\textwidth]{Figures/IMG_7337.png}
+%    \caption{B\&K Omnisource}
+%    \label{fig:Omnisource}
+%\end{subfigure}%
+%\begin{subfigure}[t]{0.5\textwidth}
+%        \centering
+%    \includegraphics[width=0.9\textwidth]{Figures/Arraymicrophone.png}
+%    \caption{Prototyped microphone array}
+%    \label{fig:Array}
+%\end{subfigure}
+%\end{figure} 
+
+
+\newpage
+\subsubsection{Outdoor measurement}
+
+In order to try our algorithm in a real condition. A measurement is done 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/scenario1.png}
+    \caption{Scenario}
+    \label{fig:Scenario1}
+\end{figure}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1pic.jpg}
+    \caption{Scenario}
+    \label{fig:Scenario1pic}
+\end{figure}
+
  

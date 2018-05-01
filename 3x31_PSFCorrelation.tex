@@ -26,9 +26,9 @@ This way, if a peak is caused by a single localization circle, the cross-correla
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProdNeg6.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProdNeg10.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom product-SRP-PHAT localization results  with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\caption{Figures depict from top-to-bottom product-SRP-PHAT localization results  with SNR = 20dB, SNR = 0dB, SNR = -10dB}
 \label{fig:4mic1srcNoisyProd}
 \end{figure}
 \newpage
@@ -47,13 +47,13 @@ The drawback of using product-SRP-PHAT is that the sound level difference betwee
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures//Ind4mic1srcProdNeg6Corr.png}
+    \includegraphics[width=0.8\textwidth]{Figures//Ind4mic1srcProdNeg10Corr.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom level corrected product-SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\caption{Figures depict from top-to-bottom level corrected product-SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -10dB}
 \label{fig:4mic2srcNoisyCompare}
 \end{figure}
 \subsubsection{Minimum power SRP-PHAT}
-Another deconvolution approach can be to use the far-field assumption again, to assume that the power received from a single source to all microphone pairs is the same. In that case, if, the minimum power between the microphone pair is assumed to be the true power (instead of summing), peaks which are detected only by a subset of microphone arrays would disappear automatically and the deconvolution problem can be solved directly. Fig. \ref{fig:4mic1srcNoisyMinPow} shows the results. Even in adverse conditions of -6 dB, the algorithm is fairly able to detect the source at $(50\degree, 60\degree)$. 
+Another deconvolution approach can be to use the far-field assumption again, to assume that the power received from a single source to all microphone pairs is the same. In that case, if, the minimum power between the microphone pair is assumed to be the true power (instead of summing), peaks which are detected only by a subset of microphone arrays would disappear automatically and the deconvolution problem can be solved directly. Fig. \ref{fig:4mic1srcNoisyMinPow} shows the results. Even in adverse conditions of 0 dB, the algorithm is fairly able to detect the source at $(50\degree, 60\degree)$, without any subsidiary peaks due to the localization cones. 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
@@ -68,12 +68,12 @@ Another deconvolution approach can be to use the far-field assumption again, to 
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcMinNeg6.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcMinNeg10.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom minimum power SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -6dB}
+\caption{Figures depict from top-to-bottom minimum power SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -10dB}
 \label{fig:4mic1srcNoisyMinPow}
 \end{figure}
-The drawback of both product-SRP-PHAT and Minimum power SRP-PHAT is that in case of localizing point sources, even a minor error in temperature or wind recordings has the potential of not detecting the sound source completely. In real life however, the source is rarely a point source.
+Minimum power SRP-PHAT is same in principle to finding the intersection of multiple hyperboloids, since this method only returns sound sources detected by all independent microphone pairs. The drawback of both product-SRP-PHAT and Minimum power SRP-PHAT is that in case of localizing point sources, even a minor error in temperature or wind recordings has the potential of not detecting the sound source completely. However, since outdoor sound sources are usually large, the cones from microphone pairs are not sharp circular lines, rather, they are broad depending on the sound source size. An error in weather conditions would then cause these fatty circles to `smudge' together. Since minimum power picks the lowest powered circle for each point searched, this has the potential to underestimate the sound source, both in size and magnitude.
 
 \subsection{Other Deconvolution methods}
 CLEAN is an algorithm proposed by Jan Högbom in 1974 \cite{1974A&AS...15..417H} to perform the deconvolution of images in radio astronomy. Högbom observed the sky images being polluted by what he described as the "dirty beam". This "dirty beam" is the distortion introduced in the system output when the input is subject to a point source. It relates to the point spread function (PSF) in optic or the array response in our case. The CLEAN algorithm removes the side lobes of the beamformer when the PSF is known in advance throught simulation or measurement. CLEAN-SC is an extension of the CLEAN algorithm but does not rely on knowing the PSF in advance, it uses the coherence between the sidelobes and the main beam to identify the PSF and retrieve the level of the sources. Usually efficient deconvolution is performed in the frequency domain when the PSF is shift-invariant but in our case the PSF change for every scanned position as the array response is different therefore it can become challenging to perform the deconvolution on a real time system. The CLEAN and CLEAN-SC algorithm and some notation will be introduced as well as the algorithm issues. Methods to overcome those issues are also discussed.

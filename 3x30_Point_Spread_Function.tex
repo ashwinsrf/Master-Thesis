@@ -17,7 +17,7 @@ A perfect array will detect a point precisely at the actual source location and 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/2mic1srcRes.png}
-    \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The red dot indicates the actual source location.}
+    \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The red cross indicates the actual source location.}
     \label{fig:2mic1src}
 \end{figure}
 If three microphones are placed in a horizontal equilateral triangle, we get three circles (three possible pairs of microphones) from localization. The maximum peak occurs at 2 locations with azimuth=50$\degree$ and elevation=$\pm 60\degree$.
@@ -66,7 +66,7 @@ The result in fig. \ref{fig:4mic1srcInd} is applicable only in ideal conditions 
 \label{fig:4mic1srcNoisy}
 \end{figure}
 \subsubsection{Effect of temperature}
-Temperature affects the speed of sound and thus affects the delay time between the microphone pairs. During measurement, if it is assumed to be room temperature, this could lead to errors in the localization results. Fig.\ref{fig:4mic1srcTemp} depicts the effect of temperature on localization results, where wave files received by the tetrahedral microphone array at temperatures of $0\degree C$, $20\degree C$ and $40\degree C$ are simulated. Then the localization is run assuming the speed of sound to be 343m/sec in every case. As can be seen in the figure, an error in recording temperature has the effect of `de-focusing' the main peak.
+Temperature affects the speed of sound and thus affects the delay time between the microphone pairs. During measurement, if it is assumed to be room temperature, this could lead to errors in the localization results. Fig.\ref{fig:4mic1srcTemp} depicts the effect of temperature on localization results, where wave files received by the tetrahedral microphone array at temperatures of $0\degree C$, $20\degree C$ and $-40\degree C$ are simulated. Then the localization is run assuming the speed of sound to be 343m/sec in every case. The figure shows zoomed in results around the source location. As can be seen in the figure, an error in recording temperature has the effect of `de-focusing' the main peak.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
@@ -81,9 +81,9 @@ Temperature affects the speed of sound and thus affects the delay time between t
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSum40deg.png}
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcSumNeg40deg.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT localization results with at temperatures of $20\degree C$, $0\degree C$ and $40\degree C$. SNR = 20dB.}
+\caption{Figures depict from top-to-bottom SRP-PHAT localization results with at temperatures of $20\degree C$, $0\degree C$ and $-40\degree C$.}
 \label{fig:4mic1srcTemp}
 \end{figure}
 \subsubsection{Effect of wind}
@@ -102,9 +102,9 @@ Wind speed effects the speed of sound in the direction of propagation. Delays be
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcWind180.png}
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcWind45Fast.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT localization results with wind of $10 m/sec$ blowing $90\degree$, $45\degree$ and $180\degree$ to the source sound propagation direction. SNR = 20dB.}
+\caption{Figures depict from top-to-bottom SRP-PHAT localization results with wind of $10 m/sec$ blowing $90\degree$, $10 m/sec$ blowing $45\degree$ and $30 m/sec$ blowing $45\degree$ to the source sound propagation direction.}
 \label{fig:4mic2srcWind}
 \end{figure}
 \subsubsection{Effect of ground reflections}
@@ -125,16 +125,14 @@ Sound received from a far-field sound source consists of the plane wave and the 
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRef10.png}
 \end{subfigure}
-
     \caption{Figures depict from top-to-bottom SRP-PHAT localization results with ground reflection coefficients (R) of 1, 0.6 and 0.1. Even though the image source should get significantly weaker for R=0.1, it does not as it is supported by the localization cones from microphones parallel to the ground.}
     \label{fig:4mic1srcRef}
 \end{figure}
-\subsubsection{Effect of `phase' noise}
-Coming Soon!
+%\subsubsection{Effect of `phase' noise}
+%Coming Soon!
 \newpage
 \subsubsection{Effect of angular resolution of localization}
 Similar to the 2D angular resolution due to a single pair (Fig. \ref{fig:res_diff}), the tetrahedral array has its own 3D  angular resolution depending on the sample rate and the array aperture size. Fig. \ref{fig:res_diff_3d} describes the angular resolution of a tetrahedral array of aperture 1m for different sample rates. If the SRP search space is $360\degree$ by $180\degree$, and the resolution of search is $1\degree$, there will be some angular locations where the delay in sample between a microphone pair is fractional. For simplicity, this fractional delay is rounded for all plots in this thesis. This means that certain locations will contain duplicate data from the nearest integral delay location to themselves. Obviously, the resolution improves for higher sample rate.
-
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
@@ -151,8 +149,30 @@ Similar to the 2D angular resolution due to a single pair (Fig. \ref{fig:res_dif
     \centering
     \includegraphics[width=0.7\textwidth]{Figures/res3d192k.png}
 \end{subfigure}
-
     \caption{Figures depict from top-to-bottom SRP-PHAT angular resolution of localization with sample rate of 12kHz, 48kHz and 192kHz.}
     \label{fig:res_diff_3d}
 \end{figure}
-\subsubsection{Effect of change in aperture size}d
+\subsubsection{Effect of change in aperture size or sample rate}
+As discussed above and shown in fig. \ref{fig:res_diff}, reducing the aperture size or sample rate also reduces the angular resolution of localization, which causes a direct degradation in SRP-PHAT performance. Fig. \ref{fig:4mic1srcAper} depicts the effect of reducing sample rate or aperture size on the SRP-PHAT localization results.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/Tetra1m.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/Tetra10cm.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/Tetra1mFS.png}
+\end{subfigure}
+    \caption{Figures depict from top-to-bottom SRP-PHAT localization results with tetrahedral microphone array aperture size of 1m@48kHz, 10cm@48khz and 1m@4.8kHz.}
+    \label{fig:4mic1srcAper}
+\end{figure}
+\newpage
+\subsubsection{Effect of using the redundant microphone pairs}
+A thing to note is that Eq. \ref{Eq:linearDep} is only true for no noise conditions. In case of low SNR, there is a potential to gain information by using the redundant microphone pairs. This is because if noise at all microphones is assumed to be uncorrelated, certain microphone pairs will have a lower magnitude for a certain location of the SRP search .
