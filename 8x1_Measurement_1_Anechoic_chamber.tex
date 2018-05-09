@@ -1,8 +1,4 @@
-\newpage
-
-\subsection{Measurement journals}
-
-\subsubsection{Experiment 1: Retrieving single source position}
+\subsection{Experiment 1: Retrieving single source position}
 
 The purpose of this experiment is to test the sound localization algorithms in a controlled environment. A tetrahedral array receives sound waves emitted by a point source and its location is  retrieved. The point source position is fixed and the microphone array is rotated around its axis in order to change the receiving angle of the wave. A diagram of the setup is display in figure \ref{fig:Anechoic1} where the two point source position are shown: 90 and 30 degree.  The source is chosen to be a pink noise as in our simulation but recording of a 300Hz sinusoid are performed to check the delay between the microphones. In order to recreate the far field condition in the limited space of the anechoic chamber the array is placed as further away from the source and the array aperture is reduced in order to reduce the size of the array and obtain a better plane wave propagation. 
 
@@ -51,49 +47,51 @@ Variation in delay are due to the source position inaccuracies or could be due t
  
 \subsubsection{Results}
 
-Wave files recorded by the pulse system are used by the algorithm. The script "NAMEOFTHESCRIPT" is run and the energy maps of the SRP-PHAT and minimum power SRP-PHAT algorithms are computed and display in the following part.
+Wave files recorded by the pulse system are used by the algorithm. The script "NAMEOFTHESCRIPT" is run and the energy maps of the SRP-PHAT and minimum power SRP-PHAT algorithms are computed and displayed in the following part.
 
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0Deg1SrcMinPo.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0Deg1SrcNorm.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0degreeMinPow.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic0Deg1SrcMinPow.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 0 degree}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source around (90 $\degree$, 0$\degree$) in the Anechoic Room}
 \end{figure}
 
-As expected the source position is not exactly spot on at 90 degree azimuth incidence also we observe a slight elevation of the source. This is explained by the top microphone being on the same horizontal axis as the acoustic center of the sound source thus creating a slight shift up. This shift can also be explained by the inaccuracies in the microphone positions on the microphone array. The prototype microphone array allow the 3 microphones on the horizontal axis to move up and down in order to adjust the microphone array aperture relative to the "fixed" top microphone. Therefore there might be a maladjustment in the position of the 3 lower microphones relative to the top microphone thus creating an incorrect position on the vertical axis and ultimately an error in the localization. The height of the microphone array is later increase in order to place the 3 lower microphones on the same vertical axis as the acoustic center of the sound source. As will be seen in the following graphs of the sound source at 30 $\degree$ azimuth the elevation error is reduced. No further investigation are done. 
+The source position is not exactly spot on at 90 degree azimuth incidence also we observe a slight elevation of the source. This is explained by the top microphone being on the same horizontal axis as the acoustic center of the sound source thus creating a slight shift up. 
+%This shift can also be explained by the inaccuracies in the microphone positions on the microphone array. The prototype microphone array allows the 3 microphones on the horizontal axis to move up and down in order to adjust the microphone array aperture relative to the "fixed" top microphone. Therefore there might be a maladjustment in the position of the 3 lower microphones relative to the top microphone thus creating an incorrect position on the vertical axis and ultimately an error in the localization. 
+The height of the microphone array is later increase in order to place the 3 lower microphones on the same vertical axis as the acoustic center of the sound source. The following figure shows the results for source at (30 $\degree$, 0$\degree$)
+%As will be seen in the following graphs of the sound source at 30 $\degree$ azimuth the elevation error is reduced. No further investigation are done. 
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeNormal.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30Deg1SrcNorm.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeMinPow.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30Deg1SrcMinPow.png}
 \end{subfigure}
 \caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 30 degree}
 \end{figure}
 
 \newpage
-\subsubsection{Experiment 2: Retrieving the multi sources location and level}
+\subsection{Experiment 2: Retrieving the multi sources location and relative level}
 
-An other experiment is setup in the anechoic chamber with focus on retrieving the relative source levels difference of two sources playing at the same time. One source is placed
-at 90 $\degree$ azimuth and play a pink noise at 46dBA, the second source is placed at 130 $\degree$ azimuth and play an uncorrelated pink noise at 52dbA. The files are generated in matlab and low frequencies are filter out in order to accommodate for the speaker used. Two ball speakers are used to play the source signal and the aperture size of the array is 0,395m. Temperature of the room is 22 $\degree$ and wind is 0 m/s.
+Another experiment is setup in the anechoic chamber with focus on retrieving the relative source levels difference of two sources playing at the same time. One source is placed at (90 $\degree$, 0$\degree$) and plays a pink noise at 46dBA, the second source is placed at (130 $\degree$, 0$\degree$) and plays an uncorrelated pink noise at 52dbA. The files are generated in matlab and low frequencies are filtered out in order to accommodate for the speaker used. Two custom spherical speakers are used to play the source signal and the aperture size of the array is 0.395m. Temperature of the room is 22 $\degree$ and wind is 0 m/s.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Figures/AnechoicPic.jpg}
-    \caption{Picture of the set up. The anechoic chamber was filled with other setup therefore the sources has been replaced by red dots for clarity. 90 and 130 $\degree$ azimuth are also drawn on top of the picture.}
+    \caption{Picture of the set up. The anechoic chamber was filled with misc. equipment, therefore the sources have been replaced by red dots for clarity. 90 and 130 $\degree$ azimuth are also drawn on top of the picture.}
     \label{fig:Anechoicpic1}
 \end{figure}
 
@@ -110,14 +108,14 @@ at 90 $\degree$ azimuth and play a pink noise at 46dBA, the second source is pla
     \centering
     \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeNormal.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic2SrcNorm.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{0.96\textwidth}
     \centering
-    \includegraphics[width=0.95\textwidth]{Figures/Anechoic30degreeMinPow.png}
+    \includegraphics[width=0.95\textwidth]{Figures/Anechoic2SrcMinPow.png}
 \end{subfigure}
-\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization for source at 30 degree}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization}
 \end{figure}
 
 
@@ -140,22 +138,174 @@ at 90 $\degree$ azimuth and play a pink noise at 46dBA, the second source is pla
 
 
 \newpage
-\subsubsection{Outdoor measurement}
+\subsection{Outdoor measurement}
+\subsubsection{Scenario 1: One static source}
 
-In order to try our algorithm in a real condition. A measurement is done 
+In order to test the algorithm in a real conditions, several measurements are made on a construction field. Rather than using artificial source placed in the field at a known azimuth and elevation, real sources are used. In the first scenario one construction machine has a fixed position and produces noise that is recorded by the microphone array. Pictures are taken using a camera with a known focal length in order to retrieve the source azimuth. The aperture of the microphone array is 1 meter and the sources are more than 30 meters away. The measurement system is setup in the middle of the road in order to avoid too much pressure buildup near the wall boundary and back reflections. A recording is made and \fig{Fig:OutdoorLast1Src} decribes the results. Temperature is 23 $\degree$C speed of wind is 2m/s.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/scenario1.png}
-    \caption{Scenario}
-    \label{fig:Scenario1}
-\end{figure}
+
+
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{Figures/Scenario1pic.jpg}
-    \caption{Scenario}
+    \caption{Picture of the construction field at the center point of the microphone array}
     \label{fig:Scenario1pic}
 \end{figure}
 
- 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/scenario2diagram.png}
+    \caption{Top view of the construction field}
+    \label{fig:Scenario2}
+\end{figure}
+
+\subsubsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/OutsideLastNorm.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Figures/OutsideLastMinPow.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom SRP-PHAT and minimum power SRP-PHAT localization}
+\label{Fig:OutdoorLast1Src}
+\end{figure}
+
+The totality of the sound files recorded are used to localize. When using cross-correlation based methods on a longer file, it is obvious that small events does not appear as much on the map as the event that happens several times. Even if we consider the machine to be static, the excavator arm is moving around the body of the machine, by taking longer files the sounds emitted at different position around the motor does not appear as much on the image. Using a picture of known focal length we can overlay the result as shown in figure \ref{Fig:overlayimageoutside2}. The dynamic range of the map can be adjust to filter out the reflections and less powerful sources. Dynamic range of 12 dB and 6 dB  are giving meaningful results. It is indeed difficult to get a clean map when the dynamic range is big, as more and more reflection for the source itself starts appearing as well as other sources and their own reflection. Also noise created by the wind or other diffuse reflections incoming.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Outside2MinPow12dB.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Outside2MinPow6dB.png}
+\end{subfigure}
+\caption{Figures depict map overlayed on the picture with dynamic range of 12dB and 6dB}
+\label{Fig:overlayimageoutside2}
+\end{figure}
+
+\newpage
+\subsubsection{Scenario 2: 3 static sources}
+
+During the second measurement, 3 distinct noise sources are present: 1 taping machine at (180$\degree$,0$\degree$) which is not hitting the microphone directly as it is in a hole, two excavators were producing noise at azimuth  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/scenario3pic.jpg}
+    \caption{Panorama of the construction field at the center point of the microphone array}
+    \label{fig:Scenario2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/scenario1diagram.png}
+    \caption{Top view of the construction field}
+    \label{fig:Scenario1diagram}
+\end{figure}
+
+\subsubsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Full.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Full.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB and 6 dB}
+\label{Fig:Outdoorpicfull}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Zoomed.png}
+\end{subfigure}
+\end{figure}
+\begin{figure}[H]
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Zoomed.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN3Zoomed.png}
+\end{subfigure}
+\caption{Zoomed figure depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB, 6 dB and 3 dB}
+\label{Fig:Outdoorpicfull}
+\end{figure}
+
+\newpage
+\subsubsection{Scenario 3: Sport event with crowd and PA system }
+
+Measurements are performed during a sport competition outside, two main noise sources are present. The first one is a distributed PA system that covers all the zone as shown in figure \ref{fig:Scenario1diagram}, the second one is a crowd producing noise at (0°,0°).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/bmxracepic.jpg}
+    \caption{Panorama of the setup at the center point of the microphone array}
+    \label{fig:Scenario2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/bmxrace1.png}
+    \caption{Top view of the scenario}
+    \label{fig:Scenario1diagram}
+\end{figure}
+
+\subsubsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Full.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Full.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB and 6 dB}
+\label{Fig:Outdoorpicfull}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Zoomed.png}
+\end{subfigure}
+\end{figure}
+\begin{figure}[H]
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Zoomed.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{1\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN3Zoomed.png}
+\end{subfigure}
+\caption{Zoomed figure depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB, 6 dB and 3 dB}
+\label{Fig:Outdoorpicfull}
+\end{figure}

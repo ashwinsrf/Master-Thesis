@@ -17,7 +17,7 @@ A perfect array will detect a point precisely at the actual source location and 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/2mic1srcRes.png}
-    \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The red cross indicates the actual source location.}
+    \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The blue cross indicates the actual source location.}
     \label{fig:2mic1src}
 \end{figure}
 If three microphones are placed in a horizontal equilateral triangle, we get three circles (three possible pairs of microphones) from localization. The maximum peak occurs at 2 locations with azimuth=50$\degree$ and elevation=$\pm 60\degree$.
@@ -125,7 +125,7 @@ Sound received from a far-field sound source consists of the plane wave and the 
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRef10.png}
 \end{subfigure}
-    \caption{Figures depict from top-to-bottom SRP-PHAT localization results with ground reflection coefficients (R) of 1, 0.6 and 0.1. Even though the image source should get significantly weaker for R=0.1, it does not as it is supported by the localization cones from microphones parallel to the ground.}
+    \caption{Figures depict from top-to-bottom SRP-PHAT localization results with ground reflection coefficients (R) of 1, 0.6 and 0.1. Even though the image source should get significantly weaker for R=0.1, it does not as it is supported by the localization cones from the real source.}
     \label{fig:4mic1srcRef}
 \end{figure}
 %\subsubsection{Effect of `phase' noise}
@@ -175,4 +175,32 @@ As discussed above and shown in fig. \ref{fig:res_diff}, reducing the aperture s
 \end{figure}
 \newpage
 \subsubsection{Effect of using the redundant microphone pairs}
-A thing to note is that Eq. \ref{Eq:linearDep} is only true for no noise conditions. In case of low SNR, there is a potential to gain information by using the redundant microphone pairs. This is because if noise at all microphones is assumed to be uncorrelated, certain microphone pairs will have a lower magnitude for a certain location of the SRP search .
+A thing to note is that Eq. \ref{Eq:linearDep} is only true for no noise conditions. In case of low SNR, there is a potential to gain information by using the redundant microphone pairs. This is because if noise at all microphones is assumed to be uncorrelated, even though noise causes some microphone pairs to detect a source at a 'sourceless` location of the SRP search, certain microphone pairs will have a lower magnitude at that location. So in case of a SRP-PHAT, the sum of all microphone pairs will be higher at the real source location, and at other locations, the sum due to the noise will be suppressed. Fig. \ref{fig:4mic1srcRedun} shows the effect of using all microphone pairs for noisy conditions. Note that the dynamic range in the figure has been lowered to highlight the differences. It can be seen that using all the microphone pairs adds to the overall noise as more pairs can now contribute to the SRP sum, however, ideally the peak of the true source would also be higher, due to more pairs providing power at the source location. 
+\begin{figure}[H]
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcResNeg10LowDyn.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Dep4mic1srcResNeg10LowDyn.png}
+\end{subfigure}
+\caption{Figures depict from SRP-PHAT localization results with SNR = -10dB, for independent microphone pairs (top), and for all  microphone pairs (bottom)}
+\label{fig:4mic1srcRedun}
+\end{figure}
+%\subsubsection{Effect of adding more microphones}
+%It is of interest to test the scalability of the algorithm by adding more microphones. Theoretically, adding microphones should add independent pairs and thus lower the noise floor (normalized) to improve results in a low SNR scenario. 
+%\begin{figure}[H]
+%\begin{subfigure}[b]{0.96\textwidth}
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcResNeg10LowDyn.png}
+%\end{subfigure}
+%\vskip \baselineskip
+%\begin{subfigure}[b]{0.96\textwidth}
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{Figures/Dep4mic1srcResNeg10LowDyn.png}
+%\end{subfigure}
+%\caption{Figures depict from SRP-PHAT localization results with SNR = -10dB, for independent microphone pairs (top), and for all  microphone pairs (bottom)}
+%\label{fig:4mic1srcRedun}
+%\end{figure}
