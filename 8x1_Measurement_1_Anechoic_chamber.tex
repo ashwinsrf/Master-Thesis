@@ -1,4 +1,4 @@
-\subsection{Experiment 1: Retrieving single source position}
+\subsection{Retrieving single source position in free field}
 
 The purpose of this experiment is to test the sound localization algorithms in a controlled environment. A tetrahedral array receives sound waves emitted by a point source and its location is  retrieved. The point source position is fixed and the microphone array is rotated around its axis in order to change the receiving angle of the wave. A diagram of the setup is display in figure \ref{fig:Anechoic1} where the two point source position are shown: 90 and 30 degree.  The source is chosen to be a pink noise as in our simulation but recording of a 300Hz sinusoid are performed to check the delay between the microphones. In order to recreate the far field condition in the limited space of the anechoic chamber the array is placed as further away from the source and the array aperture is reduced in order to reduce the size of the array and obtain a better plane wave propagation. 
 
@@ -84,7 +84,7 @@ The height of the microphone array is later increase in order to place the 3 low
 \end{figure}
 
 \newpage
-\subsection{Experiment 2: Retrieving the multi sources location and relative level}
+\subsection{Retrieving the multi-sources location and relative level in free field}
 
 Another experiment is setup in the anechoic chamber with focus on retrieving the relative source levels difference of two sources playing at the same time. One source is placed at (90 $\degree$, 0$\degree$) and plays a pink noise at 46dBA, the second source is placed at (130 $\degree$, 0$\degree$) and plays an uncorrelated pink noise at 52dbA. The files are generated in matlab and low frequencies are filtered out in order to accommodate for the speaker used. Two custom spherical speakers are used to play the source signal and the aperture size of the array is 0.395m. Temperature of the room is 22 $\degree$ and wind is 0 m/s.
 
@@ -138,8 +138,7 @@ Another experiment is setup in the anechoic chamber with focus on retrieving the
 
 
 \newpage
-\subsection{Outdoor measurement}
-\subsubsection{Scenario 1: One static source}
+\subsection{One static source on a construction field}
 
 In order to test the algorithm in a real conditions, several measurements are made on a construction field. Rather than using artificial source placed in the field at a known azimuth and elevation, real sources are used. In the first scenario one construction machine has a fixed position and produces noise that is recorded by the microphone array. Pictures are taken using a camera with a known focal length in order to retrieve the source azimuth. The aperture of the microphone array is 1 meter and the sources are more than 30 meters away. The measurement system is setup in the middle of the road in order to avoid too much pressure buildup near the wall boundary and back reflections. A recording is made and \fig{Fig:OutdoorLast1Src} decribes the results. Temperature is 23 $\degree$C speed of wind is 2m/s.
 
@@ -195,7 +194,7 @@ The totality of the sound files recorded are used to localize. When using cross-
 \end{figure}
 
 \newpage
-\subsubsection{Scenario 2: 3 static sources}
+\subsection{3 static sources on a construction field}
 
 During the second measurement, 3 distinct noise sources are present: 1 taping machine at (180$\degree$,0$\degree$) which is not hitting the microphone directly as it is in a hole, two excavators were producing noise at azimuth  
 
@@ -219,7 +218,7 @@ During the second measurement, 3 distinct noise sources are present: 1 taping ma
     \centering
     \begin{subfigure}[b]{1\textwidth}
     \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Full.png}
+     \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Full.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{1\textwidth}
@@ -253,7 +252,7 @@ During the second measurement, 3 distinct noise sources are present: 1 taping ma
 \end{figure}
 
 \newpage
-\subsubsection{Scenario 3: Sport event with crowd and PA system }
+\subsection{Sport event with crowd and PA system }
 
 Measurements are performed during a sport competition outside, two main noise sources are present. The first one is a distributed PA system that covers all the zone as shown in figure \ref{fig:Scenario1diagram}, the second one is a crowd producing noise at (0°,0°).
 
@@ -261,7 +260,7 @@ Measurements are performed during a sport competition outside, two main noise so
     \centering
     \includegraphics[width=1\textwidth]{Figures/bmxracepic.jpg}
     \caption{Panorama of the setup at the center point of the microphone array}
-    \label{fig:Scenario2}
+    \label{fig:Scenario3}
 \end{figure}
 
 \begin{figure}[H]
@@ -277,35 +276,25 @@ Measurements are performed during a sport competition outside, two main noise so
     \centering
     \begin{subfigure}[b]{1\textwidth}
     \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Full.png}
+    \includegraphics[width=1\textwidth]{Figures/bmx.png}
 \end{subfigure}
 \vskip \baselineskip
 \begin{subfigure}[b]{1\textwidth}
     \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Full.png}
+    \includegraphics[width=1\textwidth]{Figures/bmx.png}
 \end{subfigure}
 \caption{Figures depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB and 6 dB}
 \label{Fig:Outdoorpicfull}
 \end{figure}
 
+\newpage
+\subsection{Outdoor concert}
+Measurements are performed during an outdoor concert in a free-field condition, a dj is playing music on a Public Adress system. The PA system is composed of two tops and one sub. The setup can be seen in figure \ref{fig:Scenario4diagram}
+
+
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{1\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN12Zoomed.png}
-\end{subfigure}
-\end{figure}
-\begin{figure}[H]
-\vskip \baselineskip
-\begin{subfigure}[b]{1\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN6Zoomed.png}
-\end{subfigure}
-\vskip \baselineskip
-\begin{subfigure}[b]{1\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/Scenario1DYN3Zoomed.png}
-\end{subfigure}
-\caption{Zoomed figure depict from top-to-bottom Min SRP-PHAT with dynamic range of 12dB, 6 dB and 3 dB}
-\label{Fig:Outdoorpicfull}
+    \includegraphics[width=1\textwidth]{Figures/P4day.jpg}
+    \caption{picture of the setup at the center point of the microphone array}
+    \label{fig:Scenario4}
 \end{figure}
