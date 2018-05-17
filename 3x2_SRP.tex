@@ -1,4 +1,4 @@
-\subsection{Steered Response Power}
+\subsection{SRP-PHAT}
 
 Steered Response Power (SRP) source localization is a method to detect sound source locations using beamforming techniques \cite{krim1996two}. SRP is different from TDOA based methods discussed before. While the generalized cross correlation is a simple cross correlation between each pair of microphones and only outputs an estimate of the time delay, the SRP method beamforms the space around the array and computes the energy of each location beam.  It `looks' at all possible directions individually (steering) and computes the power of the signal cross correlation in that direction (beamforming). The assumption is that the cross power of the steered microphone array will be the maximum in the correct source direction. However, the computational demand for this can rise quite fast (depending on the sampling rate and the angular resolution of the beamforming), making it nearly impossible to implement in real time applications. However, its performance in difficult conditions outperforms the TDOA based methods \cite{dmochowski2007generalized}. Since real-time localization is not of primary importance for this thesis, SRP based methods can be applied. In the same fashion as the GCC method proposed to pre-filter the signal before performing the cross correlation, a PHAT weighing can be applied on the beamformed signal. This method is called SRP-PHAT. In this section, the first part discusses the basic principles behind the method whereas the second part introduces a hybrid method that improves the computational time of SRP without decreasing its robustness. 
 
@@ -73,6 +73,53 @@ The method can be easily extended to SRP-PHAT, where pre-filtering the signal be
 where
 \begin{equation}
     \psi_{ij}(k) = \frac{1}{|{X_{i}(k)X_{j}^*(k)}|}
+\end{equation}
+
+\subsection{Behavior of SRP-PHAT}
+
+Beamforming techniques for sound localization have been study intensively over the last decades. The main drawback of the conventional beamforming are the side lobes in the localization results. If SRP-PHAT algorithm is applied to a tetrahedral array and cross-correlations values at different delays are summed by the beamformer (Eq. \ref{eq:srpSum}), subsidiary peaks can appear in the energy map at DOAs that don't correspond to the incident plane wave DOA. Those peaks in the SRP-PHAT energy map can mask real sources or even add up to other peaks from other sources, thus display a fake source. 
+%For far-field, this means a plane wave incident with a particular DOA on the microphone array. In transfer function terms, the array response is `deconvolved' from the final energy map. 
+%While this problem has motivated the creation of new beamformers {!!CITATION!!}, the problem lies in the method itself.
+%New classes of algorithms have been developed to deconvolve the noise signals from the desired steered signal such as CLEAN \cite{sijtsma2007clean} and DAMAS \cite{brooks2006deconvolution}.
+%DAMAS was acknowledged a major breakthrough in array processing. At first research was mainly focused on aeroacoustic for the development of near-field sound localization system but it seems that a new enthusiasm has taken over scientists trying to solve other sound localization problems. 
+%While the DAMAS method is mainly designed for near field measurements in the range of the array aperture size, a new deconvolution method has been proposed [\cite{zhao2015large}, \cite{zhao2017large}] where a small aperture array is used to measure source signal in the far field. The principle behind point spread function is discussed in the following section. Then a review of the underlying principles of the main deconvolution algorithms is given, and finally a specific method for coherent and incoherent sources localization is discussed.
+A perfect array will detect a point precisely at the actual source location and nothing elsewhere. This, however, is not the general case. For example, given a single pair of microphones, and assuming far-field incidence, the only information that can be concluded from a single point source is the angle of incidence on the array. This angle is a vector combination of source azimuth and elevation. This leads to a circle around the array where the source might be located (circular maximum peak). This circle is the base of the cone resulting from the cone approximation discussed previously.
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.98\textwidth]{Figures/2mic1src.png}
+%    \caption{Figure depicts a source located at $50\degree$ azimuth and $60\degree$ elevation (orange dot). Two microphones (blue dots) will be used to localize the source.}
+%    \label{fig:2mic1srcPos}
+%\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/2mic1srcRes.png}
+    \caption{SRP-PHAT is run to localize a single point source with 2 microphones. The source is localized to a circle. The blue cross indicates the actual source location.}
+    \label{fig:2mic1src}
+\end{figure}
+A new circle will be draw for each new microphone pairs use to localize the source. As seen above, one pair can place the source position on a cone. two pairs will intersect in two locations. For example, when using three microphones placed in a horizontal equilateral triangle, three circles are drawn (three possible pairs of microphones). The maximum peak occurs at 2 locations with azimuth=50$\degree$ and elevation=$\pm 60\degree$ as shown on figure \ref{fig:3mic1src}. For a tetrahedral array, 4 microphones are used and the array response is a combination of circles from the 6 possible microphone pairs. This time the main peak occurs at exactly one point.  However, since only 3 pairs out of the 6 are linearly independent (Eq. \ref{Eq:linearDep}), the localization should really be done considering only 3 of those pairs. The result in shown in fig. \ref{fig:4mic1srcInd}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/3mic1srcRes.png}
+    \caption{SRP-PHAT is run to localize the source with 3 microphones.}
+    \label{fig:3mic1src}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRes.png}
+    \caption{SRP-PHAT is run to localize the source with a tetrahedral array.}
+    \label{fig:4mic1src}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcRes.png}
+    \caption{SRP-PHAT is run to localize the source with a tetrahedral array but only linearly independent microphone pairs are considered}
+    \label{fig:4mic1srcInd}
+\end{figure}
+Considering only independent microphones, Eq. \ref{eq:srpSum} can be rewritten as, 
+\begin{equation}
+    S_{SRP}(\theta,\phi)=\sum\limits_{i=1}^{M-1}{R_{x_0,x_i}[f_{0,i}(\theta,\phi)]}
+     \label{eq:srpSumInd}
 \end{equation}
 
 %\subsubsection{Simulations}
