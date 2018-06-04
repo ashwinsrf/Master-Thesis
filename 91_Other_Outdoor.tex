@@ -1,9 +1,5 @@
-\section{Appendix}
-
-
-
-\subsection{Other outdoor propagation effects}
-\subsubsection{Spreading loss} 
+\section{Other outdoor propagation effects}
+\subsection{Spreading loss} 
 The sound intensity from an omni-directional sound source drops as a function of distance due to wavefront spreading. The intensity I received at distance r from a source with power P, is given by
 \begin{equation}
     I = \frac{P}{4\pi r^2}.
@@ -29,7 +25,7 @@ An infinite line source can be viewed as a linear array of omni-directional poin
 \end{equation}
 The DI is again 3 dB and the reduction is $10\log2 = 3$ dB, every doubling of r. Highway traffic is modelled in a similar manner, assuming 3 dB drop every doubling of distance.
 
-\subsubsection{Diffraction and barriers}
+\subsection{Diffraction and barriers}
 Barriers are sometimes purposefully built to block the direct path from the sound source to the receiver. Sound reaches the receiver either going through the barrier or by diffracting around the top of the barrier. Ground reflections and multi-path-propagation may lead to multiple diffracted wave paths. For a barrier, the ISO 9613-2 \cite{ISO9613} provides the following equation for loss due to barrier insertion
 \begin{equation}
     IL = 10\log\bigg[3+\bigg(C_2\frac{\delta_1}{\lambda}\bigg)C_3K_{met}\bigg],
@@ -39,3 +35,5 @@ where $\lambda=wavelength$. The value of $C_2$ determines if ground reflections 
     IL = 10\log\bigg(3+40\frac{\delta_1}{\lambda}\bigg). 
 \end{equation}
 Over large distances even buildings act like barriers, with the rooftop causing double diffraction. ISO 9613-2 \cite{ISO9613} provides a simple empirical method to calculate attenuation due to buildings.
+
+

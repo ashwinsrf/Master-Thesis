@@ -1,4 +1,4 @@
- \documentclass[a4paper, 12pt]{report}
+\documentclass[a4paper,12pt]{book}
 %  A simple AAU report template.
 %  2015-05-08 v. 1.2.0
 %  Copyright 2010-2015 by Jesper Kjær Nielsen <jkn@es.aau.dk>
@@ -37,7 +37,7 @@
 % Use the palatino font
 \usepackage[sc]{mathpazo}
 \usepackage{gensymb}
-\linespread{1.05}         % Palatino needs more leading (space between lines)
+\linespread{1.1}         % Palatino needs more leading (space between lines)
 % Choose the font encoding
 \usepackage[T1]{fontenc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -62,7 +62,7 @@
 % Enable the use of frames around, e.g., theorems
 % The framed package is used in the example environment
 \usepackage{framed}
-
+\usepackage{wrapfig}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mathematics
 % http://en.wikibooks.org/wiki/LaTeX/Mathematics
@@ -84,18 +84,18 @@
 % Change margins, papersize, etc of the document
 \usepackage[
   a4paper,
-  total={170mm,250mm},
   top=28mm,
-  inner=28mm,% left margin on an odd page
-  outer=28mm,% right margin on an odd page
+  inner=20mm,% left margin on an odd page
+  outer=20mm,% right margin on an odd page
+  bottom=20mm
   ]{geometry}
 % Modify how \chapter, \section, etc. look
 % The titlesec package is very configureable
-\usepackage{titlesec}
-\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titleformat*{\section}{\normalfont\Large\bfseries}
-\titleformat*{\subsection}{\normalfont\large\bfseries}
-\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
+%\usepackage{titlesec}
+%\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+%\titleformat*{\section}{\normalfont\Large\bfseries}
+%\titleformat*{\subsection}{\normalfont\large\bfseries}
+%\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries}
 %\titleformat*{\paragraph}{\normalfont\normalsize\bfseries}
 %\titleformat*{\subparagraph}{\normalfont\normalsize\bfseries}
 
@@ -111,7 +111,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{} %delete everything
-\renewcommand{\headrulewidth}{0pt} %remove the horizontal line in the header
+\renewcommand{\headrulewidth}{1pt} %remove the horizontal line in the header
 \fancyhead[RE]{\small\nouppercase\leftmark} %even page - chapter title
 \fancyhead[LO]{\small\nouppercase\rightmark} %uneven page - section title
 \fancyhead[LE,RO]{\thepage} %page number on all pages
@@ -121,7 +121,11 @@
 % Enable arithmetics with length. Useful when
 % typesetting the layout.
 \usepackage{calc}
-
+\usepackage{svg}
+\addto\captionsenglish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Table of contents}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Misc
@@ -267,6 +271,8 @@
 \newsavebox\myboxB
 \newlength\mylenA
 
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+
 \newcommand*\xoverline[2][0.75]{%
     \sbox{\myboxA}{$\m@th#2$}%
     \setbox\myboxB\null% Phantom box
@@ -297,7 +303,6 @@
 		\end{exa}
 }
 
-\usepackage[utf8]{inputenc}
 \usepackage{array}
 \usepackage{siunitx} % adds SI units
 \usepackage{placeins} % includes FloatBarrier
@@ -313,7 +318,6 @@
 \usepackage{csvsimple}
 \usepackage{hhline}
 \usepackage{pdfpages}
-\usepackage[utf8]{inputenc} 
 \usepackage[T1]{fontenc}
 \usepackage{stix} 
 \usepackage{gensymb}
@@ -325,8 +329,8 @@
 \usepackage[backend=biber, sorting=none]{biblatex}
 \usepackage{booktabs}
 \addbibresource{articles.bib}
-\renewcommand{\thesection}{\hspace*{-1.0em}}
-\renewcommand{\thesection}{\arabic{section}}
+%\renewcommand{\thesection}{\hspace*{-1.0em}}
+%\renewcommand{\thesection}{\arabic{section}}
 
 \newcommand{\argmin}{\operatornamewithlimits{argmin}}
 \newcommand{\argmax}{\operatornamewithlimits{argmax}}
@@ -349,8 +353,12 @@
 }
 
 \usepackage{etoolbox}
-\usepackage{tocloft}
-
+%\usepackage{tocloft}
+%\usepackage[titles]{tocloft}
+%\usepackage[bottom]{footmisc}
+\usepackage[titletoc]{appendix}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
 
 %\begin{titlepage}
 %	\rule{1pt}{1.1\textheight} % Vertical line
@@ -369,40 +377,61 @@
 %\end{titlepage} 
 
 
+\usepackage[intoc]{nomencl}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pgfplots}
+\usepackage{mathtools}
 
+\pgfplotsset{compat=1.9}
 
 
 
 
 \begin{document}
+
+\frontmatter
 \include{01_Preface}
 \tableofcontents
+
+\makenomenclature
+\renewcommand{\nomname}{Table of acronyms}
+
+UTC\nomenclature{UTC}{Coordinated Universal Time} 
+ADT\nomenclature{ADT}{Atlantic Daylight Time} 
+EST\nomenclature{EST}{Eastern Standard Time}.
+
+
+\printnomenclature
+
+\mainmatter
 \include{02_Introduction}
-\newpage
-\section{DOA estimation using a microphone array}
 %\input{2x2_Tetrahedral_Array}
 \input{1_TDOA_Basics}
 \input{3x1_GCC}
 \input{3x2_SRP}
-\newpage
 \input{3x300_Behaviorsrpphat}
 \input{3x31_PSFCorrelation}
+\input{3x305_complexity}
 \input{3x301_sensitivityenvironment}
 \input{3x302_Measurementsystem}
-\input{3x304_postprocessing}
-\input{3x305_complexity}
 %\input{3x3_Deconvolution}
 %\input{3x6_Blinddeconvolution}
 %\input{3x4_Eigenvalue}
 %\input{4x1_Proposition}
-\newpage
+\input{7x1_Levels}
 \input{8x2_MicArray}
-\input{8x1_Measurement_1_Anechoic_chamber}
-\newpage
-\input{6x1_Conclusion}
-\include{90_Appendix}
-\input{2x1_Environmental_Sound_Propagation}
-\input{2_Models}
+\input{8x1_Measurements}
+\input{8x99_Conclusion}
 
+\begin{appendices}
+\include{90_Environmental_Sound_Propagation}
+\input{91_Other_Outdoor}
+\input{92_Add_meas}
+\input{93_productdeconv}
+\input{94_OtherSims}
+\input{95_Pratical}
+\end{appendices}
+\backmatter
 \printbibliography
 \end{document}

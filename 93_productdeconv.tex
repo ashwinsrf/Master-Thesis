@@ -1,0 +1,63 @@
+\chapter{Other deconvolution}
+\section{Product-SRP-PHAT}
+A simple deconvolution approach could be to penalize sources which are only detected by a subset of the microphone pair combinations. This could be done by taking a product and not a sum in Eq. \ref{eq:srpSumInd}.
+\begin{equation}
+    S_{SRP}(\theta,\phi)=\prod\limits_{i=1}^{M-1}{R_{x_0,x_i}[f_{0,i}(\theta,\phi)]}
+     \label{eq:srpProdInd}
+\end{equation}
+This way, if a peak is caused by a single localization circle, the cross-correlation values from other microphone pairs would be close to zero, and thus would scale the false peak down. The localization results from this are given in fig. \ref{fig:4mic1srcNoisyProd}.
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd20.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd0.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProdNeg10.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom product-SRP-PHAT localization results  with SNR = 20dB, SNR = 0dB, SNR = -10dB}
+\label{fig:4mic1srcNoisyProd}
+\end{figure}
+\newpage
+The drawback of using product-SRP-PHAT is that the sound level difference between the different sound sources is lost. In normal SRP-PHAT, the array magnitude response at a particular azimuth and elevation is averaged over all microphone pair combinations. Then the level difference between 2 sources is maintained. In product-SRP-PHAT this would not be the case. However if it is assumed that a particular source will have similar magnitude response for all microphone pairs (which is not a strong assumption in far-field), then taking source power $P_{SRP}={S_{SRP}}^{1/M}$, the level difference can be maintained.  Fig. \ref{fig:4mic2srcNoisyCompare} depicts the results of product-SRP-PHAT after level correction.
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd20Corr.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcProd0Corr.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figures//Ind4mic1srcProdNeg10Corr.png}
+\end{subfigure}
+\caption{Figures depict from top-to-bottom level corrected product-SRP-PHAT localization results with SNR = 20dB, SNR = 0dB, SNR = -10dB}
+\label{fig:4mic2srcNoisyCompare}
+\end{figure}
+
+\section{Threshold SRP-PHAT}
+For product SRP-PHAT, if one of the cones is really high is magnitude, the algorithm might not be able to penalize a wrong location enough by simple multiplication with low power from other microphone pairs. This means that if one of the microphone pairs detects a very low power at a particular location, it should have a higher priority when deciding the power at that location. One way to achieve this could be to sort the power for the different cones at each location, and then divide the values with each other. If the numbers are quite different in magnitude, the division could then cross a certain pre-defined threshold, and the power at that location could be set to zero. However, while this methodology could work for a single source, for multiple sources playing at different levels, and which share a localization cone, this would lead to the masking of the lower magnitude source.   
+
+\section{Source level retrieval: a comparison}\label{srcLevel}
+A comparison of different deconvolution approaches to retrieve the correct source level has been performed by Padois \cite{padois2016use}. The author compared errors in source power retrieval using SRP-PHAT on a 6 microphone array, using arithmetic mean (AM), geometric mean (GM) and harmonic mean (HM) of the powers received at different source locations. A comparison with minimum power SRP-PHAT is provided here. Since AM is the same as normal SRP-PHAT, the comparison is done with GM and HM. Three sources located at (-30$\degree$, 30$\degree$), (-50$\degree$, 30$\degree$), (-70$\degree$, 30$\degree$) having source magnitude 0dB, -3dB and -6dB are localized. The choice of locations is arbitrary and is chosen close to each other to be able to zoom into results effectively. Fig. \ref{fig:srcLevelComp} describes the results.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.96\textwidth]{Figures/srcLvlComp.png}
+\caption{Figure compares multi-source localization for various deconvolution approaches}
+\label{fig:srcLevelComp}
+\end{figure}
+
+As can be seen, min-power SRP-PHAT provides even more accurate results than the HM based approach. This is because, even in HM the sum of all localization cones is taken, which has the potential to overestimate the source magnitude. The results presented here are for relatively good conditions of +20dB SNR. For worse conditions, the results can be even worse for non min-pow based approaches.

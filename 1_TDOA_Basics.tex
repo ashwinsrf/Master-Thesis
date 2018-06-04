@@ -1,8 +1,9 @@
-\subsection{Direction of arrival using time delay information}
+\chapter{DOA estimation using a microphone array}
+\section{Direction of arrival using time delay information}
 
-\subsubsection{TDOA of a single microphone pair}\label{sec:TDOA}
+\subsection{TDOA of a single microphone pair}\label{sec:TDOA}
 
-When using a pair of microphones, sound from a particular source arrives at the two microphones at different times, based on the source distance to the particular microphone. For a pair of microphones located at $m_{1}$ and $m_{2}$, the time difference of arrival (TDOA) of a sound signal from a source located at s can be defined as:
+When using a pair of microphones, sound from a particular source arrives at the two microphones at different times, based on the source distance to the particular microphone. For a pair of microphones located at $m_{1}$ and $m_{2}$, the time difference of arrival (TDOA) of a sound signal from a source located at $s$ can be defined as:
 \begin{equation}
     \begin{split}
     T(\{m_{1},m_{2}\},s)&=\frac{|s-m_{1}|-|s-m_{2}|}{c}\\
@@ -10,51 +11,43 @@ When using a pair of microphones, sound from a particular source arrives at the 
     \label{eq:tdoa}
     \end{split}
 \end{equation}
-where c is the speed of sound in the medium and $|D_{1}|$ and $|D_{2}|$ the distance between the source and the microphones at $m_1$ and $m_2$.
-
-In 2D, this equation leads to a hyperbola (Fig.\ref{eq:tdoa}) where the two focus points of the hyperbola are the sensors. The difference of the distance from any point of the hyperbola to the two focus is always the same.
-
-\begin{figure}[H]
+where $c$ is the speed of sound in the medium and $|D_{1}|$ and $|D_{2}|$ the distance between the source and the microphones at $m_1$ and $m_2$. In 2D, this equation leads to a hyperbola (Fig.\ref{eq:tdoa}) where the two focus points of the hyperbola are the sensors. The difference of the distance from any point of the hyperbola to the two focus is always the same.
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/hyperbola.png}
     \caption{A hyperbola (represented in blue), the red dot is any point on the hyperbola, the black dots represent the two foci. For any point on the hyperbola, $|D_1|-|D_2| = constant$}
     \label{eq:tdoa}
 \end{figure}
-
 In 3D, the TDOA information can be used to locate the source on a two-sheeted hyperboloid $\chi(\{m_{1},m_{2}\},s)$ such that the microphone positions are its foci. In practice the two-sheeted hyperboloid can be approximated to a cone so as to have a much simpler equation for the locus: $\theta$  = \textit{constant}, where $\theta$ is the angle of the source to the  midpoint of the line segment joining the two microphones (Fig. \ref{fig:hyperboloid_Cone}).
-
-\begin{figure}[H]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/hyperboloid.png}
     \caption{A 2-sheeted hyperboloid with a cone approximation overlay. As the tips of the hyperbola get closer (the microphones are closer), the hyperbola approximates the cone better.}
     \label{fig:hyperboloid_Cone}
 \end{figure}
-
-Of course as the source location gets closer to being orthogonal to the midpoint of the line segment joining the two microphones ($\theta=90\degree$), the hyperbola gets wider and flatter (more planar) and approximates the cone better. Also as the source gets closer to the line joining the two microphones ($\theta=0\degree, 180\degree$), the hyperbola collapses to a straight line and approximates the cone better. Thus, the error minimizes for broad-side sound source ($\theta=90\degree$) and for end-side sound source ($\theta=0\degree, 180\degree$), and maximizes for the midsection ($\theta=45\degree, 135\degree$). The equation for the error is given by
+Of course as the source location gets closer to being orthogonal to the midpoint of the line segment joining the two microphones ($\theta=90\degree$), the hyperbola gets wider and flatter (more planar) and approximates the cone better. Also as the source gets closer to the line joining the two microphones ($\theta=0\degree, 180\degree$), the hyperbola collapses to a straight line and approximates the cone better. Thus, the error minimizes for broad-side sound source ($\theta=90\degree$) and for end-side sound source ($\theta=0\degree, 180\degree$), and maximizes for the midsection ($\theta=45\degree, 135\degree$). The equation for the error are derived by Brandstein \cite{Brandstein:1995:FSS:922154} and are given by
 \begin{equation}
 \begin{split}
     max\{\theta_{error}\} \approx  \frac{M_{dist}^2}{16R^2}\\
     max\{D_{error}\} \approx  \frac{M_{dist}^2}{16R},
 \end{split}
 \end{equation}
-where $D_{error}$ is the actual source distance error (the gap between the cone and the hyperboloid) \cite{Brandstein:1995:FSS:922154}.
+where $M_{dist}^2$ is the distance between the microphone, $R$ the distance from the source to the microphone pair center and $D_{error}$ is the actual source distance error (the gap between the cone and the hyperboloid).
 
-Microphones in microphone arrays are usually closely spaced with respect to the actual source distance, so the cone approximation works well. In most scenarios errors due to noise from other system parameters are greater than the errors associated with this approximation. Thus, given the time delay information between a microphone pair, the source can be located at a particular direction $\theta$, associated with the cone for that time delay, \textit{d}. 
+Microphones in microphone arrays are usually closely spaced with respect to the actual source distance, so the cone approximation works well. In most scenarios errors due to noise from other system parameters are greater than the errors associated with this approximation. Thus, given the time delay information between a microphone pair, the source can be located at a particular direction $\theta$, associated with the cone for that time delay, \textit{d}. It can be shown that the cone approximation is the same as a far-field assumption for the sound source. The far-field assumption leads to a planar wave-front for a uniform linear microphone array. Thus, for the far-field, the DOA estimation problem is essentially the same as the TDOA estimation problem as there is a one-to-one relation between $\theta$ and \textit{d}.
 
-It can be shown that the cone approximation is the same as a far-field assumption for the sound source. The far-field assumption leads to a planar wave-front for a uniform linear microphone array. Thus, for the far-field, the DOA estimation problem is essentially the same as the TDOA estimation problem as there is a one-to-one relation between $\theta$ and \textit{d}.
-
-\begin{figure}
+\begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.6\textwidth]{Figures/Far-field.png}
+    \includegraphics[width=0.6\textwidth]{Figures/farfieldtheta.png}
     \caption{With far-field approximation it can be assumed that the sound waves incident on the pair of microphones are parallel (planar incidence).}
     \label{fig:my_label}
 \end{figure}
 
 Now, given the TDOA between multiple microphone pairs, the source localization problem can be solved by triangulation. This triangulation problem can be solved for different variables ($\theta$, Source Distance or the Time Delay itself). The next section will detail the basics of solving such a problem. 
 
-\subsubsection{TDOA of a tetrahedral array}\label{sec:TDOAN}
+\subsection{TDOA of a tetrahedral array}\label{sec:TDOAN}
 
-A tetrahedron simplest spatial structure with 4 vertices (a triangular pyramid). The tetrahedron has 4 vertices, 4 faces and 6 edges. If the tetrahedron is regular then all the vertices are equally spaced from each other and every face is an equilateral triangle. A 1m aperture tetrahedral microphone array composed of 4 microphones at position $p_1, p_2, p_3, p_4$ is described by fig. \ref{fig:regulartetra}
+A tetrahedron simplest spatial structure with 4 vertices (a triangular pyramid). The tetrahedron has 4 vertices, 4 faces and 6 edges. If the tetrahedron is regular then all the vertices are equally spaced from each other and every face is an equilateral triangle. A 1m aperture tetrahedral microphone array composed of 4 microphones at position $p_1, p_2, p_3, p_4$ is described below.
 
 %%\begin{equation}
 %%    p_1=\begin{bmatrix}-0.5 \\ 0 \\ 0\end{bmatrix}   
@@ -66,52 +59,51 @@ A tetrahedron simplest spatial structure with 4 vertices (a triangular pyramid).
 %%    p_4=\begin{bmatrix}0 \\ -0.43\\0.70\end{bmatrix}
 %%\end{equation} 
 %%%
+%\begin{figure}[!ht]
+%    \centering
+%    \begin{subfigure}[b]{0.48\textwidth}
+%    \centering
+%    \includegraphics[width=1\textwidth]{Figures/unit_tetra.png}
+%    \caption{Side view}
+%    \label{fig:d1}
+%\end{subfigure}
+%\hfill
+%\begin{subfigure}[b]{0.48\textwidth}
+%    \centering
+%    \includegraphics[width=1\textwidth]{Figures/unit_tetra_top2.png}
+%    \caption{Top view}
+%    \label{fig:d2}
+%\end{subfigure}
+%    \caption{Representation of a regular tetrahedron with unit sides, centroid at origin and horizontally level lower face, front view and top view}
+%    \label{fig:regulartetra}
+%\end{figure}
+
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/unit_tetra.png}
-    \caption{Side view}
-    \label{fig:d1}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=1\textwidth]{Figures/unit_tetra_top2.png}
-    \caption{Top view}
-    \label{fig:d2}
-\end{subfigure}
-    \caption{Representation of a regular tetrahedron with unit sides, centroid at origin and horizontally level lower face, front view and top view}
-    \label{fig:regulartetra}
+    \includegraphics[width=0.5\textwidth]{Figures/arrayex.png}
+    %\caption{Two tetrahedral array}
+    \label{fig:arrayex}
 \end{figure}
 
 Let's define three Cartesian axis X,Y,Z with spherical coordinates as shown in figure \ref{fig:3daxis}.
 
-\begin{figure}[H]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.6\textwidth]{Figures/3dCoord.png}
     \caption{Cartesian axis used throughout the thesis}
     \label{fig:3daxis}
 \end{figure}
 
-A unit vector $\hat{u}$ in this 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation as described in figure \ref{fig:3daxis}.
-\begin{equation}
-    \begin{split}
-        x_u&=cos(\theta)cos(\phi) \\
-        y_u&=sin(\theta)cos(\phi) \\
-        z_u&=sin(\phi),
-    \end{split}
-\end{equation}
-this can be denoted by the unit propagation vector ${\hat{a}(\theta,\phi)}$ in the Cartesian coordinates
+A unit vector $\hat{u}$ in this 3d space can be defined in spherical coordinates by (1,$\theta$,$\phi$), where the magnitude of the vector is 1, $\theta$ the azimuth and $\phi$ the elevation as described in figure \ref{fig:3daxis}. This can be denoted by the unit propagation vector ${\hat{a}(\theta,\phi)}$ in the Cartesian coordinates
 \begin{equation}
     \hat{a}(\theta,\phi)=\begin{bmatrix}cos(\theta)cos(\phi) \\sin(\theta)cos(\phi) \\sin(\phi)\end{bmatrix},
 \end{equation}
-Suppose sound is travelling along the unit vector $\hat{u}$. Let 2 microphones be placed at positions $\hat{p}_1=(x_1,y_1,z_1)$ and $\hat{p}_2=(x_2,y_2,z_2)$.  Then $\hat{p}_{12}=\hat{p}_{2}-\hat{p}_{1}$, where ${\hat{p_{12}}}$ is the distance between the two microphones. The projection of this distance in the direction of $\hat{u}$ is simply $\hat{a}(\theta,\phi)\cdot\hat{p}_{12}$ and the time it takes for sound to travel between the two microphones is then 
+Suppose sound is travelling along the unit vector $\hat{u}$. Let 2 microphones be placed at positions $\hat{p}_1=(x_1,y_1,z_1)$ and $\hat{p}_2=(x_2,y_2,z_2)$.  Then $\hat{p}_{12}=\hat{p}_{2}-\hat{p}_{1}$, where ${\hat{p_{12}}}$ is the distance vector between the two microphones. The projection of this distance in the direction of $\hat{u}$ is simply $\hat{a}(\theta,\phi)\cdot\hat{p}_{12}$ and the time it takes for sound to travel between the two microphones is then 
 \begin{equation}
     \hat{t}_{12}=\frac{\hat{a}(\theta,\phi)\cdot\hat{p}_{12}}{c},
-\end{equation} c being the speed of sound. In case of M microphones in arbitrary 3D position, $^MC_2$ combinations of pairs are possible, giving $^MC_2$ possible TDOA estimates. However, not all the pairs are linearly independent. Given 3 microphones i, j and k, the time delays $\hat{t}$ satisfy:
+\end{equation} $c$ being the speed of sound. In case of M microphones in arbitrary 3D position, $^MC_2$ combinations of pairs are possible, giving $^MC_2$ possible TDOA estimates. However, not all the pairs are linearly independent. Given 3 microphones i, j and k, the time delays $\hat{t}$ satisfy:
 \begin{equation}
-    \hat{t}_{i,j}=\hat{t}_{i,k}+\hat{t}_{j,k}
+    \hat{t}_{i,j}=\hat{t}_{i,k}+\hat{t}_{k,j}
     \label{Eq:linearDep}
 \end{equation}
 Thus, only M-1 linearly independent combinations of microphone pairs exists. This can be written as the vector $\hat{t}=(\hat{t}_{1,2}.....\hat{t}_{1,M})^T$ in the M-1 dimensional subspace S $\subset$ $^MC_2$. Thus, given a tetrahedral array, only 3 linearly independent combinations of cross-correlations exist. A least-Squares approach could be considered, with the 3 use-able combinations. The `correct' DOA is then the $a(\Theta,\Phi)$ which minimizes the cost function
@@ -134,7 +126,7 @@ Figure \ref{fig:hyperboloid_intersect} gives a 2D representation of 3 hyperboloi
     \label{fig:hyperboloid_intersect}
 \end{figure}
 
-\subsection{Least Square problem}\label{sec:LSTDOA}
+\section{Least Square problem}\label{sec:LSTDOA}
 
 Let's define a Least Square (LS) problem which solves the localization of the sources in space as explained in section \ref{sec:TDOAN}. The LS problem optimize the position of the source in space by minimizing a given error criterion $ J $.
 \begin{equation}
@@ -143,7 +135,7 @@ Let's define a Least Square (LS) problem which solves the localization of the so
 
 3 error criteria can be selected for solving the source location LS problem:  $J_{TDOA}(s)$, $J_{DOA}(s)$, $J_{D}(s)$. Those criteria are explained in the following sections.
 
-\subsubsection{$J_{TDOA}(s)$ Error Criterion}
+\subsection{$J_{TDOA}(s)$ Error Criterion}
 
 $J_{TDOA}(s)$ is the squared error difference between the time delay estimate $\tau$ and the time delay measured between the microphone pairs. The criterion and the optimization problem is given in the following.
 
@@ -184,7 +176,7 @@ Assuming that the DOA estimates $\theta_{i}$ are independently corrupted by zero
 \label{eq:epsilonjtdoa}
 \end{equation}
 
-\subsubsection{$J_{D}(s)$ Error Criterion}
+\subsection{$J_{D}(s)$ Error Criterion}
 
 finally, $J_{D}(s)$ is the squared error difference between the orthogonal distance from s to the appropriate cone approximation 
 
@@ -205,7 +197,7 @@ D(\chi_{i},s)=R_{i}.\sin{[\theta_{i}-\Theta(m_{i1},m_{i2},s)}]
  \epsilon_{id}=\frac{1}{\mathrm{Var}{\Theta_{i}}}    
 \end{equation}
 
-\subsubsection{Estimator performance}
+\subsection{Estimator performance}
 
 The estimators described above vary in term of performance under certain conditions. For a bi-linear array, Brandstein has shown that $J_{TDOA}(s)$ and $J_{DOA}(s)$ are more robust to great angle of incidence than $J_{D}(s)$. At low noise level, $J_{TDOA}(s)$ is proven to be slightly better than $J_{DOA}(s)$ but $J_{DOA}(s)$ perform better overall especially for long range source location. $J_{TDOA}(s)$ is better for broadside sources and low noise level but $J_{DOA}(s)$ is more robust for less favorable noise conditions
 
