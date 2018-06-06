@@ -24,3 +24,24 @@ An experiment to visualize the delays between the microphones in the tetrahedral
 Mic 1 and Mic 2 were faced towards the sound source, with Mic 3 behind and in line with the sound source. Mic 4 being the top microphone. The arrangement was such that the sound source was approximately at (90$\degree$,0$\degree$). As can be seen the delay between Mic 1 and Mic 2 is almost zero, indicating source close to 90$\degree$ azimuth. The combination of these delays can be used to predict the source direction, both in azimuth and elevation. However, if the plane wave approximation does not hold, the combination might result in a null set (No single intersection point of all the cones from the various microphone pairs).
 
 %Variation in delay are due to the source position inaccuracies or could be due to the plane wave approximation not holding. Therefore wider peaks are to be expected and a slight shift from the zero degree position. The microphones are not calibrated in this experiment as we can see difference in amplitude are noticeable.
+
+\section{Length of recording}
+The effect of the length of recording has been simulated before. The effect was also checked on a real world measurement. The results used here are from the Chalk Mine, close range and close to edge case.
+\begin{figure}[H]
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/ChalkCloseFull1Sec.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/ChalkCloseFull10Sec.png}
+\end{subfigure}
+\vskip \baselineskip
+\begin{subfigure}[b]{0.96\textwidth}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Figures/ChalkCloseFull120Sec.png}
+\end{subfigure}
+\caption{Figures depict from SRP-PHAT localization results, for recording length 1sec (top), 10sec (middle) and 120sec (bottom). Relative dB are plotted here}
+\label{fig:4mic1srcRedun}
+\end{figure}

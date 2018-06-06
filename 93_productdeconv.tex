@@ -49,15 +49,3 @@ The drawback of using product-SRP-PHAT is that the sound level difference betwee
 
 \section{Threshold SRP-PHAT}
 For product SRP-PHAT, if one of the cones is really high is magnitude, the algorithm might not be able to penalize a wrong location enough by simple multiplication with low power from other microphone pairs. This means that if one of the microphone pairs detects a very low power at a particular location, it should have a higher priority when deciding the power at that location. One way to achieve this could be to sort the power for the different cones at each location, and then divide the values with each other. If the numbers are quite different in magnitude, the division could then cross a certain pre-defined threshold, and the power at that location could be set to zero. However, while this methodology could work for a single source, for multiple sources playing at different levels, and which share a localization cone, this would lead to the masking of the lower magnitude source.   
-
-\section{Source level retrieval: a comparison}\label{srcLevel}
-A comparison of different deconvolution approaches to retrieve the correct source level has been performed by Padois \cite{padois2016use}. The author compared errors in source power retrieval using SRP-PHAT on a 6 microphone array, using arithmetic mean (AM), geometric mean (GM) and harmonic mean (HM) of the powers received at different source locations. A comparison with minimum power SRP-PHAT is provided here. Since AM is the same as normal SRP-PHAT, the comparison is done with GM and HM. Three sources located at (-30$\degree$, 30$\degree$), (-50$\degree$, 30$\degree$), (-70$\degree$, 30$\degree$) having source magnitude 0dB, -3dB and -6dB are localized. The choice of locations is arbitrary and is chosen close to each other to be able to zoom into results effectively. Fig. \ref{fig:srcLevelComp} describes the results.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=0.96\textwidth]{Figures/srcLvlComp.png}
-\caption{Figure compares multi-source localization for various deconvolution approaches}
-\label{fig:srcLevelComp}
-\end{figure}
-
-As can be seen, min-power SRP-PHAT provides even more accurate results than the HM based approach. This is because, even in HM the sum of all localization cones is taken, which has the potential to overestimate the source magnitude. The results presented here are for relatively good conditions of +20dB SNR. For worse conditions, the results can be even worse for non min-pow based approaches.

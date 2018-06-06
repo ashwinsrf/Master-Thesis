@@ -5,12 +5,12 @@ Sound has been a subject of fascination for a long time and with good reason. We
 
 \section{Background}
 
-Sound localization algorithms have been successfully applied (to varying degrees) to a wide range of engineering problems. Traditionally, distinction is usually made between algorithm using the time difference of arrival (TDOA) of signal between pairs microphones to find the position of a source and the algorithm using beamforming Steered Response Power (SRP). However, the SRP-PHAT algorithm, one of the most robust and widely implemented technique combines the advantages of those two techniques. A significant bit of research has been done on implementing SRP-PHAT on speech enhancement systems, whereby speaker identification and teleconferencing in an environment having high background noise and reverberant conditions was needed. Outdoor sound can be appreciably different from this situation. This thesis propose to adapt SRP-PHAT to outdoor multisources sound localization. 
+Sound localization algorithms have been successfully applied (to varying degrees) to a wide range of engineering problems. Traditionally, distinction is usually made between algorithm using the time difference of arrival (TDOA) \nomenclature{\textbf{TDOA}}{Time Difference Of Arrival}  of signal between pairs microphones to find the position of a source and the algorithm using beamforming Steered Response Power (SRP). However, the SRP-PHAT algorithm, one of the most robust and widely implemented technique combines the advantages of those two techniques. A significant bit of research has been done on implementing SRP-PHAT on speech enhancement systems, whereby speaker identification and teleconferencing in an environment having high background noise and reverberant conditions was needed. Outdoor sound can be appreciably different from this situation. This thesis proposes a method to adapt the SRP-PHAT to compute a sound map of a multi-source outdoor environment.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{Figures/scenario33.png}
-    \caption{sketch of the proposed case solved by the thesis}
+    \includegraphics[width=0.8\textwidth]{Figures/scenariofarfield.png}
+    \caption{Various outdoor sound sources being localized by a microphone array}
     \label{fig:Introductioncase}
 \end{figure}
 
@@ -18,7 +18,7 @@ Sound localization algorithms have been successfully applied (to varying degrees
 
 This thesis focus mainly on source signal spectrum ranging from low-to-mid frequencies in the far field. It should be noted that the purpose of this thesis is not to track moving sources, rather the thesis tackles the problem of \textit{static outdoor sound levels and their contributors} with the constraint of using as few microphones as possible while being robust to different noise and weather conditions. The thesis propose a solution capable of retrieving the noise source position in a variety of scenario including free-field to moderate reverberating environments. While previous research mostly tackle the problem of single source localization using linear or circular arrays, this thesis use a tetrahedral array to capture the signals.
 
-The organization of the thesis is as follow: chapter 2 derives the theory used to analyze the problem and create our simulation framework. Chapter 3 focus on describing the methods employed to solve the problem as well as algorithm features and its robustness and performance in outdoor conditions the algorithm performance.
+The organization of the thesis is as follows: Chapter 2 derives the theory used to analyze the problem and create our simulation framework. Chapter 3 focus on describing the methods employed to solve the problem as well as algorithm features and its robustness and performance in outdoor conditions the algorithm performance.
 Chapter 4 contains experimental results, anechoic and outdoor measurements investigating the algorithm limits in a variety of scenario.
 Chapter 5 encompass a discussion about the solution and propose new ideas and further work.
 

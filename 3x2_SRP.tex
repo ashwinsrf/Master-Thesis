@@ -1,6 +1,6 @@
-\section{SRP-PHAT}
-\subsection{Steered Response Power}
-Steered Response Power (SRP) source localization is a method to detect sound source locations using beamforming techniques \cite{krim1996two}. SRP is different from TDOA based methods discussed before. While the generalized cross correlation is a simple cross correlation between each pair of microphones and only outputs an estimate of the time delay, the SRP method beamforms the space around the array and computes the energy of each location beam.  It `looks' at all possible directions individually (steering) and computes the power of the signal cross correlation in that direction (beamforming). The assumption is that the cross power of the steered microphone array will be the maximum in the correct source direction. However, the computational demand for this can rise quite fast (depending on the sampling rate and the angular resolution of the beamforming), making it nearly impossible to implement in real time applications. But, its performance in difficult conditions outperforms the TDOA based methods \cite{dmochowski2007generalized}. Since real-time localization is not of primary importance for this thesis, SRP based methods can be applied. In the same fashion as the GCC method proposed to pre-filter the signal before performing the cross correlation, a PHAT weighing can be applied on the beamformed signal. This method is called SRP-PHAT. %In this section, the first part discusses the basic principles behind the method whereas the second part introduces a hybrid method that improves the computational time of SRP without decreasing its robustness. 
+\section{SRP-PHAT}\label{sec:SRP}
+Steered Response Power (SRP) source localization is a method to detect sound source locations using beamforming techniques \cite{krim1996two}. SRP is different from TDOA based methods discussed before. While the generalized cross correlation is a simple cross correlation between each pair of microphones and outputs an estimate of the time delay, the SRP method beamforms the space around the array and computes the energy of each location beam.  It `looks' at all possible directions individually (steering) and computes the power of the signal cross correlation in that direction (beamforming). The assumption is that the cross power of the steered microphone array will be the maximum in the correct source direction. However, the computational demand for this can rise quite fast (depending on the sample rate and the angular resolution of the beamforming), making it nearly impossible to implement in real time applications. But, its performance in difficult conditions outperforms the TDOA based methods \cite{dmochowski2007generalized}. Since real-time localization is not of primary importance for this thesis, SRP based methods can be applied. However, in the same fashion as the GCC methods proposed to pre-filter the signal before performing the cross correlation, PHAT weighing can also be applied on the beamformed signal. The method, called SRP-PHAT, combines the robustness of the SRP to the accuracy of the PHAT. 
+\subsection{Steered response power}
 The SRP method is based on a regular delay-and-sum beamformer, for a given point in space having range $\rho$, azimuth $\theta$ and elevation $\phi$ with the microphone array, the output of the beamformer is given by
 \begin{equation}
     y_{\rho,\theta,\phi}(n)=\sum\limits_{m=0}^{M-1}{w_m x_m[n + f_{0,m}(\rho,\theta,\phi)]},
@@ -21,7 +21,7 @@ This cross correlation is computed in the frequency domain (cross-spectrum) whic
 
 Where $X_{i}(k)$ is the $N_{f}$ (number  point Fast Fourier Transform of a signal from the $i$ microphone.  
 
-\subsection{Algorithm for SRP}
+\subsection{SRP algorithm}
 \begin{itemize}
     \item Compute the cross correlations of the signals received at all the microphone pairs. 
     \item Compute for each set of angles ($\phi,\theta$), the corresponding set of delays for every microphone pair $f_{i,j}(\theta,\phi)$. So if 1$\degree$ angular resolution is used, the SRP method computes delays for 360*180=64800 angular positions, for each microphone pair.
@@ -53,7 +53,7 @@ Where $X_{i}(k)$ is the $N_{f}$ (number  point Fast Fourier Transform of a signa
 %The classical SRP search beamforms sequentially the 3D space and locations [($\phi_{1},\theta_{1}$), ($\phi_{2},\theta_{2}$), ... ,($\phi_{x},\theta_{x}$)] which might be associated with the same relative delay $\tau_{1}$ (in case of a uniform linear microphone array). The cross correlation at delay $\tau_{1}$ is then computed $x$ times, which leads to the same results for each [($\phi_{1},\theta_{1}$), ($\phi_{2},\theta_{2}$), ... ,($\phi_{x},\theta_{x}$)] positions, leading to numerous useless cross correlation computations.
 %In GCC methods this issue was taken care of by interpolation, where the microphone pair end-side localization had poor resolution (Fig. \ref{fig:res_diff}). 
 \subsection{Extending PHAT to SRP-PHAT}
-PHAT can easily be extended to SRP-PHAT, by simply pre-filtering the cross-correlations before the SRP sum step,
+PHAT can be extended to SRP-PHAT, by simply pre-filtering the cross-correlations before the SRP sum step,
 \begin{equation}
     R_{x_i,x_j}(\tau)= \sum\limits_{k=0}^{N_{f}-1}{\psi_{ij}(k) X_{i}(k)X_{j}^*(k)e^{j2\pi\frac{k}{N_{f}}\tau}}
 \end{equation}
@@ -62,7 +62,9 @@ where
     \psi_{ij}(k) = \frac{1}{|{X_{i}(k)X_{j}^*(k)}|}
 \end{equation}
 %Beamforming techniques for sound localization have been study intensively over the last decades. The main drawback of the conventional beamforming are the side lobes in the localization results. 
-When localizing a point source using SRP-PHAT, the ideal result is to detect a point precisely at the actual point source location and nothing elsewhere. However that is not the case for SRP-PHAT. For instance, if two microphones are used, the only information that can be computed from localizing a single point source is the angle of incidence on the array. For a source located at (-50$\degree$, 60$\degree$)\footnote{For the purpose of this thesis, locations are designated as (x$\degree$, y$\degree$), signifying (azimuth, elevation) of the location respectively}, unsing two microphones located on the x axis (elevation $0\degree$) this leads to a circle (Fig. \ref{fig:2mic1src}) around the array where the source might be located. This is because the angle of incidence from every point on the circle, to the mid point of the line joining the two microphones, is the same. Thus, the circle is the base of the cone resulting from the cone approximation discussed before.
+% the ideal result is to detect a point precisely at the actual point source location and nothing elsewhere. However that is not the case for SRP-PHAT. For instance, i
+\subsection{Localizing with SRP-PHAT}
+When localizing a point source using SRP-PHAT, if two microphones are used, the only information that can be computed is the angle of incidence of the source on the array. For example, for a source located at (-50$\degree$, 60$\degree$)\footnote{For the purpose of this thesis, locations are designated as (x$\degree$, y$\degree$), signifying (azimuth, elevation) of the location, respectively, in spherical coordinates.}, the result is a circle around the array where the source might be located, shown in Fig. \ref{fig:2mic1src}. This is because the angle of incidence from every point on the circle, to the mid point of the line joining the two microphones, is the same. This circle is actually the base of the hyperboloid discussed in Sec. \ref{sec:TDOA}.
 %For far-field, this means a plane wave incident with a particular DOA on the microphone array. In transfer function terms, the array response is `deconvolved' from the final energy map. 
 %While this problem has motivated the creation of new beamformers {!!CITATION!!}, the problem lies in the method itself.
 %New classes of algorithms have been developed to deconvolve the noise signals from the desired steered signal such as CLEAN \cite{sijtsma2007clean} and DAMAS \cite{brooks2006deconvolution}.
@@ -78,20 +80,27 @@ When localizing a point source using SRP-PHAT, the ideal result is to detect a p
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/2mic1srcRes.png}
-    \caption{SRP-PHAT is run to localize a single point source using 2 microphones located on the x axis. The source can only be localized to a circle. The blue cross in the figure indicates the actual source location.}
+    \caption{SRP-PHAT is run to localize a single point source using two microphones $M_{1} and M_{2}$ as described in appendix \ref{app:micLocs}. The source can only be localized to a circle. The blue cross in the figure indicates the actual source location. Note that the reason the circle does not appear exactly circular in image is due to the cylindrical projection being used to display the result.}
     \label{fig:2mic1src}
 \end{figure}
-A new circle will result for each new microphone pair used to localize the source, for example, when using three microphones A, B and C placed in a horizontal equilateral triangle, three circles can be computed (one each for AB, BC and CA). The maximum peak occurs at 2 locations with (-50$\degree$,$\pm 60\degree$) as shown on figure \ref{fig:3mic1src}. For a tetrahedral array, 4 microphones are used and the array response is a combination of circles from the 6 possible microphone pairs ($^4C_2$). This time the main peak occurs at exactly one point. However, the cross-correlations values at computed delays are summed by the beamformer (Eq. \ref{eq:srpSum}) and subsidiary peaks can appear in the energy map at DOAs that don't correspond to the true source DOA, for example, points where only two of the circles meet. If multiple sources are localized, these peaks in the SRP-PHAT energy map can add up leading to the detection of a fake source or can mask real sources. Since only 3 pairs out of the 6 in a tetrahedral array are linearly independent (Eq. \ref{Eq:linearDep}), the localization can also be done considering only 3 of those pairs. The result in shown in fig. \ref{fig:4mic1srcInd}.
+The results in Fig. \ref{fig:2mic1src} are displayed using the cylindrical projection technique, such that the entire spherical space around the origin can be shown as a rectangle, with x-axis being the azimuth and y-axis being the elevation. This technique is employed throughout the thesis to give a full picture of the localization results.
+
+A new circle will result for each new microphone pair used to localize the source, as long as the microphone pairs are not all placed in the same line\footnote{In the case of a linear array, the multiple circles would overlap completely}. For example, for three microphones A, B and C placed in an equilateral triangle formation, three circles can be computed (one each for AB, BC and CA). The maximum peak occurs at 2 locations with (-50$\degree$,$\pm$ 60$\degree$) as shown in Fig. \ref{fig:3mic1src}. If a fourth microphone is placed in the same plane as the triangle, the array response will be a combination of circles from 6 possible microphone pairs ($^4C_2$). However, the new circles would all pass through the same 2 locations. For a non co-planar array, e.g. a tetrahedral array, the maximum peak occurs at exactly one poin, shown in \ref{fig:4mic1src}. 
+\subsection{Some considerations with SRP-PHAT}
+\subsubsection{Subsidiary peaks}
+Even though a tetrahedral array is able to detect a point source to a single maximum peak position, subsidiary peaks can appear in the energy map at DOAs that don't correspond to the true source DOA, since, the cross-correlations values at computed delays are summed by the beamformer (Eq. \ref{eq:srpSum}). For example, points where only 2-5 of the circles meet. If multiple sources are localized, these peaks in the SRP-PHAT energy map can add up leading to the detection of a fake source and can also mask real sources. The effect of these subsidiary peaks can be reduced by increasing the number of microphones. This is because, even though more microphone pairs would mean more localization circles, it also means the real peaks would be higher, effectively lowering the noise/subsidiary peak floor. Indeed, solutions in the market exist with even 90 microphones (\cite{batel2003noise}, Fig. 31). However, since, the number of microphones is a constraint requirement for this thesis, this solution is not considered.
+\subsubsection{Linear dependency}
+Since only 3 pairs out of the 6 in a tetrahedral array are linearly independent (Eq. \ref{Eq:linearDep}), the localization can also be done considering only 3 of those pairs. The result in shown in Fig. \ref{fig:4mic1srcInd}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/3mic1srcRes.png}
-    \caption{SRP-PHAT is run to localize the source with 3 microphones.}
+    \caption{SRP-PHAT is run to localize the source with 3 microphones $M_{1}, M_{2} and  M_{3}$ as described in appendix \ref{app:micLocs}.}
     \label{fig:3mic1src}
 \end{figure}
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\textwidth]{Figures/4mic1srcRes.png}
-    \caption{SRP-PHAT is run to localize the source with a tetrahedral array.}
+    \caption{SRP-PHAT is run to localize the source with a tetrahedral array ($M_{1}, M_{2},  M_{3} and M_{4}$ as described in appendix \ref{app:micLocs}).}
     \label{fig:4mic1src}
 \end{figure}
 \begin{figure}[!ht]
@@ -106,44 +115,4 @@ Considering only independent microphones, Eq. \ref{eq:srpSum} can be rewritten a
      \label{eq:srpSumInd}
 \end{equation}
 %\subsection{Using the redundant information from the microphone pairs}
-The thing to note is that Eq. \ref{Eq:linearDep} is only true for no noise conditions. In noisy conditions, there is a potential to gain information by using the redundant microphone pairs. This is because if noise at all microphones is assumed to be uncorrelated, then even if the noise causes certain microphone pairs to detect a source at a `sourceless' location, other microphone pairs might have a lower magnitude at that location. Due to more microphone pairs, the sum of all microphone pairs will be even higher at the real source location, and at other locations, the sum due to the noise will be suppressed. It can be seen in Fig. \ref{fig:4mic1src} that using all the microphone pairs adds to the overall noise on the map as more pairs can now contribute to the SRP sum, leading to more circles. However, ideally, the peak of the true source would also become higher, due to more pairs providing power at the source location. This can means that even though the noisy floor is has noise in more locations, it is less noisy, leading to a better dynamic range. For this reason, for the rest of this thesis, all possible pair of microphones are considered for localizing.
-%\begin{figure}[H]
-%\begin{subfigure}[b]{0.96\textwidth}
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{Figures/Ind4mic1srcResNeg10LowDyn.png}
-%\end{subfigure}
-%\vskip \baselineskip
-%\begin{subfigure}[b]{0.96\textwidth}
-%    \centering
-%    \includegraphics[width=0.8\textwidth]{Figures/Dep4mic1srcResNeg10LowDyn.png}
-%\end{subfigure}
-%\caption{Figures depict from SRP-PHAT localization results with SNR = -10dB, for independent microphone pairs (top), and for all  microphone pairs (bottom)}
-%\label{fig:4mic1srcRedun}
-%\end{figure}
-%\subsubsection{Simulations}
-%Two identical sound sources are placed in the far field. A tetrahedral array with equal spacing between microphones of 1 meter is receiving the two sources. The sound received at the sources are 3 seconds of two different pink noises with respective DOA $\tetha_{1}=120\degree$, $\phi_{1}=40\degree $ and $\tetha_{2}=150\degree $ , $\phi_{2}=75\degree $. Waves are propagating in free field where no reflections and no noise is added to the microphones. The SRP maps are computed and displayed in the figure \ref{fig:coherent2pinknoise}. Source 2 is placed at a problematic angle for the tetrahedral array, detection errors are discussed in section \ref{sec:detection}. Error probability increases as the source DOA approach the angle of the axis drawn by pairs of microphones (end-side).
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=1\textwidth]{Figures/2pinknoisesrpphat.png}
-%    \caption{SRP-PHAT simulation with 2 sound sources localized using a tetrahedral array}
-%    \label{fig:coherent2pinknoise}
-%\end{figure}
-%\subsubsection{Localization errors} \label{sec:detection}
-%Two pairs of microphones are considered, the axes drawn by the two pairs is plotted (extended) in figure \ref{fig:locerrortetra}. The two axes form respective angles of $45\degree$ and $60\degree$ with the horizontal axis. Plane waves with DOA between $45\degree$ and $60\degree$ will cross the two pairs of microphones at an angle close to the respective end-sides of the pairs. As shown in figure \ref{fig:errorsimulation1} maximum errors arise in the simulation for DOA contained in between $45\degree$ and $60\degree$. For a tetrahedral array, this can be seen as the 3d space created by extending the arms connecting the microphones. 
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.9\textwidth]{Figures/locerrors.png}
-%    \caption{Axis drawn by 2 pairs of microphones}
-%    \label{fig:locerrortetra}
-%\end{figure}
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[width=0.9\textwidth]{Figures/errorphinointerpolationandrounding.png}
-%    \caption{Simulation errors with no interpolation}
-%    \label{fig:errorsimulation1}
-%\end{figure}
-%\subsubsection{Temperature and noise}
-%Temperature is a major parameter of the algorithm and it affects the speed of sound in air and ultimately the propagation delay in the array.
-%\subsubsection{SRP vs SRP PHAT}
-%An experiment is design to test our implementations of SRP and SRP PHAT. A prototype tetrahedral microphone array is placed outside, the ideal free field condition are not holding since ground effect and reflections from the nearby buildings will affect the sound waves received by the array. The SNR cannot be controlled and is found to be, 
-
+The thing to note is that Eq. \ref{Eq:linearDep} is only true for no noise conditions. In noisy conditions, there is a potential to gain information by using the redundant microphone pairs. This is because if noise at all microphones is assumed to be uncorrelated, then even though the noise causes certain microphone pairs to detect a source at a `sourceless' location, other microphone pairs might detect a lower magnitude at that location. Due to more microphone pairs, the sum of all microphone pairs will be even higher at the real source location, and at other locations, the sum due to the noise will be suppressed. It can be seen in Fig. \ref{fig:4mic1src} that using all the microphone pairs adds to the overall noise on the map as more pairs can now contribute to the SRP sum, leading to more circles. However, the peak of the true source also becomes higher, due to more pairs providing power at the source location. This means that even though the noisy floor is has noise in more locations, it is of a lower magnitude, leading to a higher achievable dynamic range. For this reason, from here on the localization results considers all possible pair of microphones.

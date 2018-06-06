@@ -212,7 +212,7 @@
         \iflanguage{danish}{%
           \includegraphics[width=\titlepageleftcolumnwidth]{figures/aau_logo_da}
         }{%
-          \includegraphics[width=\titlepageleftcolumnwidth]{aau_logo_en}
+          \includegraphics[width=\titlepageleftcolumnwidth]{Figures/aau_logo_en.pdf}
         }
       } &
       \parbox{\titlepagerightcolumnwidth}{\raggedleft\sf\small
@@ -243,8 +243,8 @@
     \textbf{Theme:}\\ #2\bigskip\par
     \textbf{Project Period:}\\ #3\bigskip\par
     \textbf{Project Group:}\\ #4\bigskip\par
-    \textbf{Participant(s):}\\ #5\bigskip\par
-    \textbf{Supervisor(s):}\\ #6\bigskip\par
+    \textbf{Participants:}\\ #5\bigskip\par
+    \textbf{Supervisor:}\\ #6\bigskip\par
     \textbf{Copies:} #7\bigskip\par
     \textbf{Page Numbers:} \pageref{LastPage}\bigskip\par
     \textbf{Date of Completion:}\\ #8
@@ -357,7 +357,7 @@
 %\usepackage[titles]{tocloft}
 %\usepackage[bottom]{footmisc}
 \usepackage[titletoc]{appendix}
-\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 
 %\begin{titlepage}
@@ -386,24 +386,20 @@
 \pgfplotsset{compat=1.9}
 
 
-
+\usepackage[bottom]{footmisc}
 
 \begin{document}
+
+\input{setreportpage}
 
 \frontmatter
 \include{01_Preface}
 \tableofcontents
 
-\makenomenclature
-\renewcommand{\nomname}{Table of acronyms}
 
-UTC\nomenclature{UTC}{Coordinated Universal Time} 
-ADT\nomenclature{ADT}{Atlantic Daylight Time} 
-EST\nomenclature{EST}{Eastern Standard Time}.
-
+\include{momenclature}
 
 \printnomenclature
-
 \mainmatter
 \include{02_Introduction}
 %\input{2x2_Tetrahedral_Array}
@@ -431,6 +427,7 @@ EST\nomenclature{EST}{Eastern Standard Time}.
 \input{93_productdeconv}
 \input{94_OtherSims}
 \input{95_Pratical}
+\input{filterdesign}
 \end{appendices}
 \backmatter
 \printbibliography
